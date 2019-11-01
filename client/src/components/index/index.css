@@ -14,6 +14,10 @@ main {
     justify-content: center;
     align-items: center;
 
+}
+
+#indexpage a {
+    text-decoration: none;
     color: white;
     font-size: 30px;
     font-weight: bold;

@@ -5,19 +5,31 @@ export default class HeaderComponent extends Component {
     render() {
         return (
             <header>
-                <div id="logo">Zsírkréta Napló</div>
+                <div id="logo">
+                    <Link to="/">Zsírkréta Napló</Link>
+                </div>
         
                 <nav id="navlinks">
                     <ul>
-                        <li>Órarendek</li>
-                        <li>Osztályok</li>
-                        <li>Tanárok</li>
-                        <li>Termek</li>
+                        <li>
+                            <Link to="/schedules">Órarendek</Link>
+                        </li>
+                        <li>
+                            <Link to="/classes">Osztályok</Link>
+                        </li>
+                        <li>
+                            <Link to="/teachers">Tanárok</Link>
+                        </li>
+                        <li>
+                            <Link to="/classrooms">Tantermek</Link>
+                        </li>
                     </ul>
                 </nav>
                 
                 <ul id="login">
-                    <li>Belépés</li>
+                    <li>
+                        <Link to="/login">Belépés</Link>
+                    </li>
                 </ul>
             </header>
         )

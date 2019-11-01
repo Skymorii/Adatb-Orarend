@@ -40,10 +40,10 @@ body {
 }
 
 /* Navigaton */
-li, a, button {
+li a {
+    text-decoration: none;
     font-family: Roboto Condensed;
     color: white;
-    text-decoration: none;
 }
 
 header {
@@ -59,7 +59,8 @@ header {
     align-items: center;
 }
 
-header #logo {
+header #logo a {
+    text-decoration: none;
     font-family: Crayon;
     color: white;
     font-size: 5vh;
@@ -68,7 +69,7 @@ header #logo {
     cursor: pointer;
 }
 
-header #logo:hover {
+header #logo a:hover {
     color: #f8eaff;
 }
 
@@ -84,7 +85,7 @@ header #navlinks li, header #login li {
     cursor: pointer;
 }
 
-header #navlinks li:hover, header #login li:hover {
+header #navlinks li a:hover, header #login li a:hover {
     color: #f8eaff;
 }
 
