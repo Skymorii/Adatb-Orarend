@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import HeaderComponent from '../header/HeaderComponent';
 import IndexComponent from '../index/IndexComponent';
+import FooterComponent from '../footer/FooterComponent';
 
 export default class RouterComponent extends Component {
     render() {
@@ -8,9 +10,13 @@ export default class RouterComponent extends Component {
             <Router>
                 <Switch>
                     <Route path="/">
-                        <IndexComponent />
+                        <HeaderComponent />
+                        <Switch>
+                            <Route exact path="/" component={IndexComponent}></Route>
+                        </Switch>
                     </Route>
                 </Switch>
+                <FooterComponent />
             </Router>
         );
     }

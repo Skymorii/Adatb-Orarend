@@ -1,0 +1,47 @@
+/* Index page styling */
+main {
+    margin: 5% 25%;
+
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+#indexpage {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#indexpage .tile {
+    width: 50vh;
+    height: 25vh;
+    margin: 0.5vh;
+
+    background-color: #4f3e6b;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+#indexpage .tile:hover {
+    background-color: #8a65a1;
+
+}
+
+#indexpage .tile img {
+    height: 15vh;
+}
+
+#indexpage .divider {
+    width: 1.5vw;
+}
