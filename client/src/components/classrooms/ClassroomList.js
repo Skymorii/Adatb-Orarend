@@ -34,7 +34,7 @@ export default class ClassroomList extends Component {
                         <tbody>
                             <tr>
                                 <th>Teremszám</th>
-                                <th>kapacitas</th>
+                                <th>Kapacitás</th>
                                 <th>Gépterem</th>
                             </tr>
                             {this.state.classrooms}
