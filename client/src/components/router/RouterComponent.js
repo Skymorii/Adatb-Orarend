@@ -5,23 +5,23 @@ import IndexComponent from '../index/IndexComponent';
 import SchedulesComponent from '../schedules/SchedulesComponent';
 import ClassesComponent from '../classes/ClassesComponent';
 import TeachersComponent from '../teachers/TeachersComponent';
-import ClassroomsComponent from '../classrooms/ClassroomsComponent';
 import LoginComponent from '../login/LoginComponent';
 import FooterComponent from '../footer/FooterComponent';
+import ClassroomList from '../classrooms/ClassroomList';
 
 export default class RouterComponent extends Component {
     render() {
         return (
             <Router>
+                <HeaderComponent />
                 <Switch>
                     <Route path="/">
-                        <HeaderComponent />
                         <Switch>
                             <Route exact path="/" component={IndexComponent}></Route>
                             <Route path="/schedules" component={SchedulesComponent}></Route>
                             <Route path="/classes" component={ClassesComponent}></Route>
                             <Route path="/teachers" component={TeachersComponent}></Route>
-                            <Route path="/classrooms" component={ClassroomsComponent}></Route>
+                            <Route path="/classrooms" component={ClassroomList}></Route>
                             <Route path="/login" component={LoginComponent}></Route>
                         </Switch>
                     </Route>

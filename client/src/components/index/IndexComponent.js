@@ -9,8 +9,8 @@ import './index.css'
 export default class IndexComponent extends Component {
     render() {
         return (
-            <main>
-                <div id="indexpage">
+            <main id="indexpage">
+                <div>
                     <Link to="/schedules">
                         <div className="tile" id="schedules">
                             <img src={Schedule} alt="órarendek" />
