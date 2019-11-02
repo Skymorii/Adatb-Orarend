@@ -4,28 +4,42 @@
     flex: 1;
     justify-content: center;
     align-items: center;
+
+    font-weight: bold;
 }
 
 #logintile {
-    height: 15vh;
-    width: 16vw;
-    padding: 4vh 3vw;
-
+    border: 1px solid #4f3e6b;
     display: table;
+}
+
+#loginheader {
+    padding: 1vh 0;
+    width: 20vw;
+    display: table;  
+    background-color: #4f3e6b;
+}
+
+#loginheader h1 {
+    margin: 1.5vh 0;
+
+    text-align: center;
+    font-size: 5vh;
+    color: white;
+}
+
+#loginform {
+    margin: auto;
+    padding: 2vw 2.5vw;
+    width: calc(20vw - 2*2.5vw - 1px);
+    display: table;
+
     background-color: white;
-    box-shadow: 2px 4px 5px #4f3e6b;
 
     font-size: 2.5vh;
 }
 
-#logintile h1 {
-    margin-top: 0;
-    margin-bottom: 4vh;
-
-    font-size: 5vh;
-}
-
-#logintile input[type=text], #logintile input[type=password] {
+#loginform input[type=text], #loginform input[type=password] {
     width: 100%;
     padding: 1.5vh;
     margin-top: 1vh;
@@ -38,16 +52,12 @@
     font-size: 2vh;
 }
 
-#logintile input:focus {
+#loginform input:focus {
     background-color: #f8eaff;
 }
 
-#logintile input[type=submit] {
+#loginform input[type=submit] {
     margin-bottom: 1vh;
-    margin-top: -1vh;
-}
-
-#logintile input[type=submit], #registerbtn {
     padding: 1.75vh 1.3vw;
 
     border: none;
@@ -61,6 +71,6 @@
     text-transform: uppercase;
 }
 
-#logintile input[type=submit]:hover {
+#loginform input[type=submit]:hover {
     background-color: #4f3e6b;
 }

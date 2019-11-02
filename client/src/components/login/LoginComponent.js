@@ -30,7 +30,9 @@ export default class LoginComponent extends Component {
         return (
             <main id="loginpage">
                 <div id="logintile">
-                    <h1>Bejelentkezés</h1>
+                    <div id="loginheader">
+                        <h1>Bejelentkezés</h1>
+                    </div>
                     <div id="loginform">
                         <form onSubmit={this.handleSubmit.bind(this)}>
                             Felhasználónév<br/>
