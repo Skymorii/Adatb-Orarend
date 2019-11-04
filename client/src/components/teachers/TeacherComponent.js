@@ -5,7 +5,8 @@ export default class TeacherComponent extends Component {
         super(props);
         this.state = {
             pedagogus_id: this.props.teacher.pedagogus_id,
-            nev: this.props.teacher.nev
+            nev: this.props.teacher.nev,
+            targynev: this.props.teacher.targynev
         }
     }
 
@@ -14,6 +15,7 @@ export default class TeacherComponent extends Component {
             <tr>
                 <td>{this.state.pedagogus_id}</td>
                 <td>{this.state.nev}</td>
+                <td>{this.state.targynev}</td>
             </tr>
         );
     }

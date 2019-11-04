@@ -76,7 +76,9 @@ server.get("/classrooms/:orderby/desc", (req, res) => {
 
 // Teachers
 server.get("/teachers", (_req, res) => {
-    let q = "SELECT * from tanar"
+    let q = `SELECT tanar.pedagogus_id, tanar.nev, tanitott_targyak.targynev
+            FROM tanar, tanitott_targyak
+            WHERE tanar.pedagogus_id = tanitott_targyak.pedagogus_id`
 
     db.query(q, (err, result) => {
         if (err) throw err;
@@ -86,7 +88,10 @@ server.get("/teachers", (_req, res) => {
 });
 
 server.get("/teachers/:orderby", (req, res) => {
-    let q = `SELECT * FROM tanar ORDER BY ${req.params.orderby} ASC`
+    let q = `SELECT tanar.pedagogus_id, tanar.nev, tanitott_targyak.targynev
+            FROM tanar, tanitott_targyak
+            WHERE tanar.pedagogus_id = tanitott_targyak.pedagogus_id
+            ORDER BY ${req.params.orderby} ASC`
 
     db.query(q, (err, result) => {
         if (err) throw err;
@@ -96,7 +101,10 @@ server.get("/teachers/:orderby", (req, res) => {
 });
 
 server.get("/teachers/:orderby/desc", (req, res) => {
-    let q = `SELECT * FROM tanar ORDER BY ${req.params.orderby} DESC`
+    let q = `SELECT tanar.pedagogus_id, tanar.nev, tanitott_targyak.targynev
+            FROM tanar, tanitott_targyak
+            WHERE tanar.pedagogus_id = tanitott_targyak.pedagogus_id
+            ORDER BY ${req.params.orderby} DESC`
 
     db.query(q, (err, result) => {
         if (err) throw err;

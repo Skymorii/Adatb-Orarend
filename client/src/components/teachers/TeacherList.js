@@ -61,9 +61,11 @@ export default class TeacherList extends Component {
                         <h3>Növekvő sorrend</h3>
                         <button onClick={(e) => this.changeOrderTeacher("pedagogus_id", e)}>Azonosító</button>
                         <button onClick={(e) => this.changeOrderTeacher("nev", e)}>Név</button>
+                        <button onClick={(e) => this.changeOrderTeacher("targynev", e)}>Tárgy</button>
                         <h3>Csökkenő sorrend</h3>
                         <button onClick={(e) => this.changeOrderTeacherDesc("pedagogus_id", e)}>Azonosító</button>
                         <button onClick={(e) => this.changeOrderTeacherDesc("nev", e)}>Név</button>                        
+                        <button onClick={(e) => this.changeOrderTeacherDesc("targynev", e)}>Tárgy</button>                        
                     </div>
                     <h2>Tanárok listája</h2>
                     <table>
@@ -71,6 +73,7 @@ export default class TeacherList extends Component {
                             <tr>
                                 <th>Azonosító</th>
                                 <th>Név</th>
+                                <th>Tárgy</th>
                             </tr>
                             {this.state.teachers}
                         </tbody>
