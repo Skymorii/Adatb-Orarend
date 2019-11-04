@@ -55,7 +55,7 @@ server.get("/classrooms", (_req, res) => {
 
 server.get("/classrooms/:orderby", (req, res) => {
     console.log(req.params.orderby);
-    let q = `SELECT * FROM \`terem\` ORDER BY \`terem\`.\`${req.params.orderby}\` ASC`
+    let q = `SELECT * FROM terem ORDER BY ${req.params.orderby} ASC`
 
     db.query(q, (err, result) => {
         if (err) throw err;
