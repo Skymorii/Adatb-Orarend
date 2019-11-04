@@ -23,6 +23,18 @@ export default class ClassroomList extends Component {
              .catch(error => { console.log("Error in ClassroomList fetchData") });
         this.setState({ classrooms: classrooms });
     }
+
+    async fetchDataDesc(orderby="") {
+        let classrooms = [];
+        await Axios.get(`http://localhost:4000/classrooms/${orderby}/desc`)
+             .then(response => {
+                 response.data.forEach(classroom => {
+                    classrooms.push(<ClassroomComponent classroom = {classroom}/>);
+                 });
+             })
+             .catch(error => { console.log("Error in ClassroomList fetchDataDesc") });
+        this.setState({ classrooms: classrooms });
+    }
     
     async componentDidMount() {
         await this.fetchData();
@@ -32,6 +44,12 @@ export default class ClassroomList extends Component {
         e.preventDefault();
         this.setState({classrooms: []});
         await this.fetchData(orderby);
+    }
+
+    async changeOrderClassroomDesc(orderby, e) {
+        e.preventDefault();
+        this.setState({classrooms: []});
+        await this.fetchDataDesc(orderby);
     }
     
     render() {
@@ -46,9 +64,9 @@ export default class ClassroomList extends Component {
                         <button onClick={(e) => this.changeOrderClassroom("kapacitas", e)}>Kapacitás</button>
                         <button onClick={(e) => this.changeOrderClassroom("gepterem_e", e)}>Gépterem</button>
                         <h3>Csökkenő sorrend</h3>
-                        <button onClick={(e) => this.changeOrderClassroom("teremszam", e)}>Teremszám</button>
-                        <button onClick={(e) => this.changeOrderClassroom("kapacitas", e)}>Kapacitás</button>
-                        <button onClick={(e) => this.changeOrderClassroom("gepterem_e", e)}>Gépterem</button>                        
+                        <button onClick={(e) => this.changeOrderClassroomDesc("teremszam", e)}>Teremszám</button>
+                        <button onClick={(e) => this.changeOrderClassroomDesc("kapacitas", e)}>Kapacitás</button>
+                        <button onClick={(e) => this.changeOrderClassroomDesc("gepterem_e", e)}>Gépterem</button>                        
                     </div>
                     <h2>Tantermek listája</h2>
                     <table>

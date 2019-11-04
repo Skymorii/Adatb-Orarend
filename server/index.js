@@ -52,10 +52,20 @@ server.get("/classrooms", (_req, res) => {
     });
 });
 
-
 server.get("/classrooms/:orderby", (req, res) => {
     console.log(req.params.orderby);
     let q = `SELECT * FROM terem ORDER BY ${req.params.orderby} ASC`
+
+    db.query(q, (err, result) => {
+        if (err) throw err;
+        res.status(200).send(result);
+        console.log(result);
+    });
+});
+
+server.get("/classrooms/:orderby/desc", (req, res) => {
+    console.log(req.params.orderby);
+    let q = `SELECT * FROM terem ORDER BY ${req.params.orderby} DESC`
 
     db.query(q, (err, result) => {
         if (err) throw err;
