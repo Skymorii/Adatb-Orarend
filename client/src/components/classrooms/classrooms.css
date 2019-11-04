@@ -7,6 +7,27 @@
     margin-top: 0;
 }
 
+#classroomspage h2 {
+    margin-top: 5vh;
+}
+
+#classroomspage #orderbuttons button {
+    padding: 1vh;
+    margin-right: 1vh;
+    background-color: #8a65a1;
+    border: none;
+    outline: none;
+    text-transform: uppercase;
+    font-family: Roboto Condensed;
+    color: white;
+    font-size: 2vh;
+    cursor: pointer;
+}
+
+#classroomspage #orderbuttons button:hover {
+    background-color: #4f3e6b;
+}
+
 #classroomspage table {
     width: 45%;
     border-collapse: collapse;
