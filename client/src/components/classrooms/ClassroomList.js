@@ -3,7 +3,6 @@ import Axios from 'axios';
 import ClassroomComponent from './ClassroomsComponent';
 import './classrooms.css'
 
-
 export default class ClassroomList extends Component {
     constructor(props) {
         super(props);

@@ -42,6 +42,8 @@ server.get("/test", (_req, res) => {
 });
 
 // SQL queries
+
+// Classrooms
 server.get("/classrooms", (_req, res) => {
     let q = "SELECT * FROM terem"
 
@@ -53,7 +55,6 @@ server.get("/classrooms", (_req, res) => {
 });
 
 server.get("/classrooms/:orderby", (req, res) => {
-    console.log(req.params.orderby);
     let q = `SELECT * FROM terem ORDER BY ${req.params.orderby} ASC`
 
     db.query(q, (err, result) => {
@@ -64,8 +65,38 @@ server.get("/classrooms/:orderby", (req, res) => {
 });
 
 server.get("/classrooms/:orderby/desc", (req, res) => {
-    console.log(req.params.orderby);
     let q = `SELECT * FROM terem ORDER BY ${req.params.orderby} DESC`
+
+    db.query(q, (err, result) => {
+        if (err) throw err;
+        res.status(200).send(result);
+        console.log(result);
+    });
+});
+
+// Teachers
+server.get("/teachers", (_req, res) => {
+    let q = "SELECT * from tanar"
+
+    db.query(q, (err, result) => {
+        if (err) throw err;
+        res.status(200).send(result);
+        console.log(result);
+    });
+});
+
+server.get("/teachers/:orderby", (req, res) => {
+    let q = `SELECT * FROM tanar ORDER BY ${req.params.orderby} ASC`
+
+    db.query(q, (err, result) => {
+        if (err) throw err;
+        res.status(200).send(result);
+        console.log(result);
+    });
+});
+
+server.get("/teachers/:orderby/desc", (req, res) => {
+    let q = `SELECT * FROM tanar ORDER BY ${req.params.orderby} DESC`
 
     db.query(q, (err, result) => {
         if (err) throw err;
