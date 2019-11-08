@@ -9,11 +9,24 @@ export default class ScheduleList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            schedules: []
+            schedules: [],
+            classes: []
         }
     }
 
-    async fetchData() {
+    async fetchDataClasses() {
+        let temp = [];
+        await Axios.get(`http://localhost:4000/classlist`)
+            .then(response => {    
+                response.data.forEach(classid => {
+                    temp.push(<option value={classid.osztaly_id}> {classid.osztaly_id} &nbsp; - &nbsp; Osztályfőnök: {classid.tanar}</option>);
+                });
+             })
+             .catch(error => { console.log("Error in ScheduleList fetchDataClasses") });
+        this.setState({ classes: temp });
+    }
+
+    async fetchData(class_id="") {
         let temp = [];
         let schedules =  new Array(9);
         for (let i=0; i<9; i++) {
@@ -22,10 +35,10 @@ export default class ScheduleList extends Component {
             schedules[i][0] = i;
         }
 
-        await Axios.get(`http://localhost:4000/schedule`)
+        await Axios.get(`http://localhost:4000/schedule/${class_id}`)
             .then(response => {    
                 for (let i=0; i<response.data.length; i++) {
-                    schedules[response.data[i].ora][DaysEnum[response.data[i].nap]+1] = response.data[i].nev;
+                    schedules[response.data[i].ora][DaysEnum[response.data[i].nap]+1] = response.data[i];
                 }
 
                 for (let i=0; i<9; i++) {
@@ -36,16 +49,28 @@ export default class ScheduleList extends Component {
         this.setState({ schedules: temp });
     }
 
-    async componentDidMount() {
-        await this.fetchData()
+    async changeSchedule(class_id = "", e) {
+        e.preventDefault();
+        this.setState({schedules: []});
+        await this.fetchData(class_id);
     }
 
-    
+    async componentDidMount() {
+        await this.fetchDataClasses();
+        // await this.fetchData()
+    }
+
     render() {
         return (
             <main id="schedulespage">
                 <div>
                     <h1>Órarendek</h1>
+                    <h2>Osztály</h2>
+
+                    <select onChange={(e) => this.changeSchedule(e.target.value, e)}>
+                        {this.state.classes}
+                    </select>
+
                     <table>
                         <tbody>
                             <tr>

@@ -94,7 +94,8 @@ server.get("/classrooms/:orderby/desc", (req, res) => {
 server.get("/teachers", (_req, res) => {
     let q = `SELECT tanar.pedagogus_id, tanar.nev, tanitott_targyak.targynev
             FROM tanar, tanitott_targyak
-            WHERE tanar.pedagogus_id = tanitott_targyak.pedagogus_id`
+            WHERE tanar.pedagogus_id = tanitott_targyak.pedagogus_id
+            AND tanitott_targyak.targynev != "osztályfőnöki"`
 
     db.query(q, (err, result) => {
         if (err) throw err;
@@ -172,9 +173,36 @@ server.get("/classes/:orderby/desc", (req, res) => {
 
 // Schedules
 server.get("/schedule", (_req, res) => {
-    let q = `SELECT ora.ora, ora.nap, ora.nev
-            FROM ora
-            WHERE ora.osztaly_id = '11a'`
+    let q = `SELECT ora.ora, ora.nap, ora.nev, ora.teremszam, tanar.nev AS tanar
+            FROM ora, tanar
+            WHERE ora.osztaly_id = '11a'
+            AND ora.pedagogus_id = tanar.pedagogus_id`
+
+    db.query(q, (err, result) => {
+        if (err) throw err;
+        res.status(200).send(result);
+        console.log(result);
+    });
+});
+
+server.get("/schedule/:class_id", (req, res) => {
+    let q = `SELECT ora.ora, ora.nap, ora.nev, ora.teremszam, tanar.nev AS tanar
+            FROM ora, tanar
+            WHERE ora.osztaly_id = '${req.params.class_id}'
+            AND ora.pedagogus_id = tanar.pedagogus_id`
+
+    db.query(q, (err, result) => {
+        if (err) throw err;
+        res.status(200).send(result);
+        console.log(result);
+    });
+});
+
+server.get("/classlist", (_req, res) => {
+    let q = `SELECT osztaly.osztaly_id, tanar.nev AS tanar
+            FROM osztaly, tanar
+            WHERE osztaly.pedagogus_id = tanar.pedagogus_id
+            GROUP BY osztaly.osztaly_id`
 
     db.query(q, (err, result) => {
         if (err) throw err;

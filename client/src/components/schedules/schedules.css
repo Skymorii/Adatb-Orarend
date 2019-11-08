@@ -29,7 +29,7 @@
 }
 
 #schedulespage table {
-    width: 45%;
+    width: 100%;
     border-collapse: collapse;
 }
 
@@ -40,7 +40,7 @@
 }
 
 #schedulespage table tr th, #schedulespage table tr td {
-    padding: 1.75vh 3vh;
+    padding: 1.75vh 6vh;
     text-align: center;
     white-space: nowrap;
 }
@@ -57,3 +57,36 @@
     font-weight: bold;
 }
 
+#schedulespage table .subject {
+    margin: 0;
+    margin-bottom: 1vh;
+    font-weight: bold;
+}
+
+#schedulespage table .teacher {
+    margin: 0;
+    margin-bottom: 1vh;
+    font-size: 1.5vh;
+}
+
+#schedulespage table .classroom {
+    margin: 0;
+    font-size: 1.5vh;
+}
+
+#schedulespage select {
+    margin-bottom: 4vh;
+    padding: 1.75vh 1vw;
+
+    border-color: #4f3e6b;
+    outline: none;
+    cursor: pointer;
+    
+    font-family: Roboto Condensed;
+    font-size: 2vh;
+    text-transform: uppercase;
+}
+
+#schedulespage select:hover {
+    background-color: #f8eaff;
+}
