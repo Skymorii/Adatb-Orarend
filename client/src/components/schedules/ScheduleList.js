@@ -13,27 +13,31 @@ export default class ScheduleList extends Component {
         }
     }
 
-    async componentDidMount() {
-        let lessonsrow = ["", "", "", "", ""];
-        let schedules = [];
-        
+    async fetchData() {
+        let temp = [];
+        let schedules =  new Array(9);
+        for (let i=0; i<9; i++) {
+            schedules[i] = new Array(6);
+            schedules[i].fill("");
+            schedules[i][0] = i;
+        }
+
         await Axios.get(`http://localhost:4000/schedule`)
             .then(response => {    
+                for (let i=0; i<response.data.length; i++) {
+                    schedules[response.data[i].ora][DaysEnum[response.data[i].nap]+1] = response.data[i].nev;
+                }
+
                 for (let i=0; i<9; i++) {
-                    lessonsrow = ["", "", "", "", ""];
-                    for (let j=0; j<5; j++) {
-                        for (let k=0; k<response.data.length; k++) {
-                            if (response.data[k].ora === i && DaysEnum[response.data[k].nap] === j) {
-                                lessonsrow[j] = response.data[k].nev;
-                            }
-                        }
-                    }
-                    console.log(lessonsrow);
-                    schedules.push(<ScheduleComponent lessons={lessonsrow} />);
-                }            
+                    temp.push(<ScheduleComponent lessons={schedules[i]} />);
+                }
              })
              .catch(error => { console.log("Error in ScheduleList fetchData") });
-        this.setState({ schedules: schedules });
+        this.setState({ schedules: temp });
+    }
+
+    async componentDidMount() {
+        await this.fetchData()
     }
 
     
@@ -45,6 +49,7 @@ export default class ScheduleList extends Component {
                     <table>
                         <tbody>
                             <tr>
+                                <th></th>
                                 <th>Hétfő</th>
                                 <th>Kedd</th>
                                 <th>Szerda</th>

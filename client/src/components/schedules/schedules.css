@@ -53,3 +53,7 @@
     background-color: #dcbcec;
 }
 
+#schedulespage table .lessonnum {
+    font-weight: bold;
+}
+

@@ -11,11 +11,12 @@ export default class ScheduleComponent extends Component {
     render() {
         return (
             <tr>
-                <td>{this.state.lessons[0]}</td>
+                <td className="lessonnum">{this.state.lessons[0]}</td>
                 <td>{this.state.lessons[1]}</td>
                 <td>{this.state.lessons[2]}</td>
                 <td>{this.state.lessons[3]}</td>
                 <td>{this.state.lessons[4]}</td>
+                <td>{this.state.lessons[5]}</td>
             </tr>
         )
     };
