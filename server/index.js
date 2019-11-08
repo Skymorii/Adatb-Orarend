@@ -41,7 +41,23 @@ server.get("/test", (_req, res) => {
     });
 });
 
-// SQL queries
+// Admin login
+let admin = {
+    username: "admin",
+    password: "admin"
+}
+
+server.post("/login", jsonParser, (req, res) => {
+    console.log(req.body.username);
+    console.log(req.body.password);
+    if (admin.username === req.body.username && admin.password === req.body.password) {
+        res.status(200).send();
+    } else {
+        res.status(403).send();
+    }
+});
+
+// MySQL queries
 
 // Classrooms
 server.get("/classrooms", (_req, res) => {
@@ -91,6 +107,7 @@ server.get("/teachers/:orderby", (req, res) => {
     let q = `SELECT tanar.pedagogus_id, tanar.nev, tanitott_targyak.targynev
             FROM tanar, tanitott_targyak
             WHERE tanar.pedagogus_id = tanitott_targyak.pedagogus_id
+            AND tanitott_targyak.targynev != "osztályfőnöki"
             ORDER BY ${req.params.orderby} ASC`
 
     db.query(q, (err, result) => {
@@ -104,7 +121,60 @@ server.get("/teachers/:orderby/desc", (req, res) => {
     let q = `SELECT tanar.pedagogus_id, tanar.nev, tanitott_targyak.targynev
             FROM tanar, tanitott_targyak
             WHERE tanar.pedagogus_id = tanitott_targyak.pedagogus_id
+            AND tanitott_targyak.targynev != "osztályfőnöki"
             ORDER BY ${req.params.orderby} DESC`
+
+    db.query(q, (err, result) => {
+        if (err) throw err;
+        res.status(200).send(result);
+        console.log(result);
+    });
+});
+
+// Classes
+server.get("/classes", (_req, res) => {
+    let q = `SELECT osztaly.osztaly_id, osztaly.kezdes_eve, osztaly.vegzes_eve, osztaly.letszam, tanar.nev, osztaly.teremszam
+            FROM osztaly, tanar
+            WHERE osztaly.pedagogus_id = tanar.pedagogus_id`
+
+    db.query(q, (err, result) => {
+        if (err) throw err;
+        res.status(200).send(result);
+        console.log(result);
+    });
+});
+
+server.get("/classes/:orderby", (req, res) => {
+    let q = `SELECT osztaly.osztaly_id, osztaly.kezdes_eve, osztaly.vegzes_eve, osztaly.letszam, tanar.nev, osztaly.teremszam
+            FROM osztaly, tanar
+            WHERE osztaly.pedagogus_id = tanar.pedagogus_id
+            ORDER BY ${req.params.orderby} ASC`
+
+    db.query(q, (err, result) => {
+        if (err) throw err;
+        res.status(200).send(result);
+        console.log(result);
+    });
+});
+
+server.get("/classes/:orderby/desc", (req, res) => {
+    let q = `SELECT osztaly.osztaly_id, osztaly.kezdes_eve, osztaly.vegzes_eve, osztaly.letszam, tanar.nev, osztaly.teremszam
+            FROM osztaly, tanar
+            WHERE osztaly.pedagogus_id = tanar.pedagogus_id
+            ORDER BY ${req.params.orderby} DESC`
+
+    db.query(q, (err, result) => {
+        if (err) throw err;
+        res.status(200).send(result);
+        console.log(result);
+    });
+});
+
+// Schedules
+server.get("/schedule", (_req, res) => {
+    let q = `SELECT ora.ora, ora.nap, ora.nev
+            FROM ora
+            WHERE ora.osztaly_id = '11a'`
 
     db.query(q, (err, result) => {
         if (err) throw err;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import Axios from 'axios';
 import './login.css'
 
 export default class LoginComponent extends Component {
@@ -7,7 +8,8 @@ export default class LoginComponent extends Component {
         super();
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            redirect: null
         }
     }
 
@@ -21,9 +23,16 @@ export default class LoginComponent extends Component {
         this.setState({ password: event.target.value });
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
-        console.log(this.state);
+        await Axios.post("http://localhost:4000/login", {
+            username: this.state.username,
+            password: this.state.password})
+            .then(respone => {
+                console.log("Sikeres bejelentkezés");
+                this.setState({redirect: <Redirect to="/admin"/>})
+            })
+            .catch(error => alert("Sikertelen bejelentkezés\nHibás felhasználónév vagy jelszó"))
     }
 
     render() {    
@@ -43,6 +52,7 @@ export default class LoginComponent extends Component {
                         </form>
                     </div>
                 </div>
+                {this.state.redirect}
             </main>
         )
     }

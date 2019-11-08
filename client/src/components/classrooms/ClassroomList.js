@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-import ClassroomComponent from './ClassroomsComponent';
+import ClassroomComponent from './ClassroomComponent';
 import './classrooms.css'
 
 export default class ClassroomList extends Component {
