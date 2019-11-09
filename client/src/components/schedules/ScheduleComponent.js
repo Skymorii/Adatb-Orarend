@@ -38,6 +38,6 @@ export default class ScheduleComponent extends Component {
                     <p className="classroom">{this.state.lessons[5].teremszam}</p>
                 </td>
             </tr>
-        )
-    };
+        );
+    }
 }

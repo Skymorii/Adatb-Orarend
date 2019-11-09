@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import TeacherComponent from './TeacherComponent';
-import './teachers.css'
 
 export default class TeacherList extends Component {
     constructor(props) {
@@ -11,9 +10,9 @@ export default class TeacherList extends Component {
         }
     }
 
-    async fetchData(orderby="") {
+    async fetchData(orderBy = "") {
         let teachers = [];
-        await Axios.get(`http://localhost:4000/teachers/${orderby}`)
+        await Axios.get(`http://localhost:4000/teachers/${orderBy}`)
              .then(response => {
                  response.data.forEach(teacher => {
                     teachers.push(<TeacherComponent teacher = {teacher}/>);
@@ -23,9 +22,9 @@ export default class TeacherList extends Component {
         this.setState({ teachers: teachers });
     }
 
-    async fetchDataDesc(orderby="") {
+    async fetchDataDesc(orderBy = "") {
         let teachers = [];
-        await Axios.get(`http://localhost:4000/teachers/${orderby}/desc`)
+        await Axios.get(`http://localhost:4000/teachers/${orderBy}/desc`)
              .then(response => {
                  response.data.forEach(teacher => {
                     teachers.push(<TeacherComponent teacher = {teacher}/>);
@@ -39,41 +38,41 @@ export default class TeacherList extends Component {
         await this.fetchData();
     };
 
-    async changeOrderTeacher(orderby, e) {
+    async changeOrderTeacher(orderBy, e) {
         e.preventDefault();
         this.setState({teachers: []});
-        await this.fetchData(orderby);
+        await this.fetchData(orderBy);
     }
 
-    async changeOrderTeacherDesc(orderby, e) {
+    async changeOrderTeacherDesc(orderBy, e) {
         e.preventDefault();
         this.setState({teachers: []});
-        await this.fetchDataDesc(orderby);
+        await this.fetchDataDesc(orderBy);
     }
 
     render() {
         return (
-            <main id="teacherspage">
+            <main>
                 <div>
                     <h1>Tanárok</h1>
-                    <div id="orderbuttons">
+                    
+                    <div>
                         <h2>Lista rendezése</h2>
                         <h3>Növekvő sorrend</h3>
                         <button onClick={(e) => this.changeOrderTeacher("pedagogus_id", e)}>Azonosító</button>
                         <button onClick={(e) => this.changeOrderTeacher("nev", e)}>Név</button>
-                        <button onClick={(e) => this.changeOrderTeacher("targynev", e)}>Tárgy</button>
                         <h3>Csökkenő sorrend</h3>
                         <button onClick={(e) => this.changeOrderTeacherDesc("pedagogus_id", e)}>Azonosító</button>
                         <button onClick={(e) => this.changeOrderTeacherDesc("nev", e)}>Név</button>                        
-                        <button onClick={(e) => this.changeOrderTeacherDesc("targynev", e)}>Tárgy</button>                        
                     </div>
+                    
                     <h2>Tanárok listája</h2>
                     <table>
                         <tbody>
                             <tr>
                                 <th>Azonosító</th>
                                 <th>Név</th>
-                                <th>Tárgy</th>
+                                <th>Tanított tárgyak</th>
                             </tr>
                             {this.state.teachers}
                         </tbody>

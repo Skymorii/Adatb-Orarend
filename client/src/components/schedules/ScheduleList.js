@@ -3,7 +3,7 @@ import Axios from 'axios';
 import ScheduleComponent from './ScheduleComponent';
 import './schedules.css'
 
-const DaysEnum = Object.freeze({"Hétfő":0, "Kedd":1, "Szerda":2, "Csütörtök":3, "Péntek":4});
+const DaysEnum = Object.freeze({"Hétfő": 0, "Kedd": 1, "Szerda": 2, "Csütörtök": 3, "Péntek": 4});
 
 export default class ScheduleList extends Component {
     constructor(props) {
@@ -19,14 +19,14 @@ export default class ScheduleList extends Component {
         await Axios.get(`http://localhost:4000/classlist`)
             .then(response => {    
                 response.data.forEach(classid => {
-                    temp.push(<option value={classid.osztaly_id}> {classid.osztaly_id} &nbsp; - &nbsp; Osztályfőnök: {classid.tanar}</option>);
+                    temp.push(<option value = {classid.osztaly_id}> {classid.osztaly_id} &nbsp; - &nbsp; Osztályfőnök: {classid.tanar}</option>);
                 });
              })
              .catch(error => { console.log("Error in ScheduleList fetchDataClasses") });
         this.setState({ classes: temp });
     }
 
-    async fetchData(class_id="") {
+    async fetchData(classId = "") {
         let temp = [];
         let schedules =  new Array(9);
         for (let i=0; i<9; i++) {
@@ -35,38 +35,36 @@ export default class ScheduleList extends Component {
             schedules[i][0] = i;
         }
 
-        await Axios.get(`http://localhost:4000/schedule/${class_id}`)
+        await Axios.get(`http://localhost:4000/schedule/${classId}`)
             .then(response => {    
                 for (let i=0; i<response.data.length; i++) {
                     schedules[response.data[i].ora][DaysEnum[response.data[i].nap]+1] = response.data[i];
                 }
 
                 for (let i=0; i<9; i++) {
-                    temp.push(<ScheduleComponent lessons={schedules[i]} />);
+                    temp.push(<ScheduleComponent lessons = {schedules[i]} />);
                 }
              })
              .catch(error => { console.log("Error in ScheduleList fetchData") });
         this.setState({ schedules: temp });
     }
 
-    async changeSchedule(class_id = "", e) {
+    async changeSchedule(classId = "", e) {
         e.preventDefault();
         this.setState({schedules: []});
-        await this.fetchData(class_id);
+        await this.fetchData(classId);
     }
 
     async componentDidMount() {
         await this.fetchDataClasses();
-        // await this.fetchData()
     }
 
     render() {
         return (
-            <main id="schedulespage">
+            <main>
                 <div>
                     <h1>Órarendek</h1>
                     <h2>Osztály</h2>
-
                     <select onChange={(e) => this.changeSchedule(e.target.value, e)}>
                         {this.state.classes}
                     </select>
@@ -86,6 +84,6 @@ export default class ScheduleList extends Component {
                     </table>
                 </div>
             </main>
-        )
+        );
     }
 }

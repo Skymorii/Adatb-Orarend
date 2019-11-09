@@ -13,39 +13,32 @@
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
-
 }
 
 #indexpage a {
-    text-decoration: none;
     color: white;
     font-size: 30px;
     font-weight: bold;
+    text-decoration: none;
 }
 
 #indexpage .tile {
     width: 50vh;
     height: 25vh;
     margin: 0.5vh;
-
-    background-color: #4f3e6b;
-
+    
     display: flex;
     justify-content: center;
     align-items: center;
 
-    cursor: pointer;
+    background-color: #4f3e6b;
 }
 
 #indexpage .tile:hover {
     background-color: #8a65a1;
-
 }
 
 #indexpage .tile img {
     height: 15vh;
-}
-
-#indexpage .divider {
-    width: 1.5vw;
+    margin-right: 1.5vw;
 }

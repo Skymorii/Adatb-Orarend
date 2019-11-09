@@ -42,6 +42,7 @@ export default class LoginComponent extends Component {
                     <div id="loginheader">
                         <h1>Bejelentkezés</h1>
                     </div>
+                    
                     <div id="loginform">
                         <form onSubmit={this.handleSubmit.bind(this)}>
                             Felhasználónév<br/>
@@ -54,6 +55,6 @@ export default class LoginComponent extends Component {
                 </div>
                 {this.state.redirect}
             </main>
-        )
+        );
     }
 }

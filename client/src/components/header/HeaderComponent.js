@@ -32,6 +32,6 @@ export default class HeaderComponent extends Component {
                     </li>
                 </ul>
             </header>
-        )
+        );
     }
 }

@@ -9,14 +9,16 @@
 }
 
 #logintile {
-    border: 1px solid #4f3e6b;
     display: table;
+    border: 1px solid #4f3e6b;
 }
 
 #loginheader {
     padding: 1vh 0;
     width: 20vw;
+
     display: table;  
+    
     background-color: #4f3e6b;
 }
 
@@ -32,6 +34,7 @@
     margin: auto;
     padding: 2vw 2.5vw;
     width: calc(20vw - 2*2.5vw - 1px);
+    
     display: table;
 
     background-color: white;
@@ -60,15 +63,7 @@
     margin-bottom: 1vh;
     padding: 1.75vh 1.3vw;
 
-    border: none;
-    outline: none;
     background-color: #8a65a1;
-    cursor: pointer;
-    
-    font-family: Roboto Condensed;
-    color: white;
-    font-size: 2vh;
-    text-transform: uppercase;
 }
 
 #loginform input[type=submit]:hover {

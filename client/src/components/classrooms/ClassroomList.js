@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import ClassroomComponent from './ClassroomComponent';
-import './classrooms.css'
 
 export default class ClassroomList extends Component {
     constructor(props) {
@@ -11,9 +10,9 @@ export default class ClassroomList extends Component {
         }
     }
 
-    async fetchData(orderby="") {
+    async fetchData(orderBy = "") {
         let classrooms = [];
-        await Axios.get(`http://localhost:4000/classrooms/${orderby}`)
+        await Axios.get(`http://localhost:4000/classrooms/${orderBy}`)
              .then(response => {
                  response.data.forEach(classroom => {
                     classrooms.push(<ClassroomComponent classroom = {classroom}/>);
@@ -23,9 +22,9 @@ export default class ClassroomList extends Component {
         this.setState({ classrooms: classrooms });
     }
 
-    async fetchDataDesc(orderby="") {
+    async fetchDataDesc(orderBy = "") {
         let classrooms = [];
-        await Axios.get(`http://localhost:4000/classrooms/${orderby}/desc`)
+        await Axios.get(`http://localhost:4000/classrooms/${orderBy}/desc`)
              .then(response => {
                  response.data.forEach(classroom => {
                     classrooms.push(<ClassroomComponent classroom = {classroom}/>);
@@ -39,24 +38,25 @@ export default class ClassroomList extends Component {
         await this.fetchData();
     };
     
-    async changeOrderClassroom(orderby, e) {
+    async changeOrderClassroom(orderBy, e) {
         e.preventDefault();
         this.setState({classrooms: []});
-        await this.fetchData(orderby);
+        await this.fetchData(orderBy);
     }
 
-    async changeOrderClassroomDesc(orderby, e) {
+    async changeOrderClassroomDesc(orderBy, e) {
         e.preventDefault();
         this.setState({classrooms: []});
-        await this.fetchDataDesc(orderby);
+        await this.fetchDataDesc(orderBy);
     }
     
     render() {
         return (
-            <main id="classroomspage">
+            <main>
                 <div>
                     <h1>Tantermek</h1>
-                    <div id="orderbuttons">
+                    
+                    <div>
                         <h2>Lista rendezése</h2>
                         <h3>Növekvő sorrend</h3>
                         <button onClick={(e) => this.changeOrderClassroom("teremszam", e)}>Teremszám</button>
@@ -67,6 +67,7 @@ export default class ClassroomList extends Component {
                         <button onClick={(e) => this.changeOrderClassroomDesc("kapacitas", e)}>Kapacitás</button>
                         <button onClick={(e) => this.changeOrderClassroomDesc("gepterem_e", e)}>Gépterem</button>                        
                     </div>
+
                     <h2>Tantermek listája</h2>
                     <table>
                         <tbody>

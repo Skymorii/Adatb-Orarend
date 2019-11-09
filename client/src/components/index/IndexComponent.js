@@ -14,7 +14,6 @@ export default class IndexComponent extends Component {
                     <Link to="/schedules">
                         <div className="tile" id="schedules">
                             <img src={Schedule} alt="órarendek" />
-                            <div class="divider"></div>
                             Órarendek
                         </div>
                     </Link>
@@ -22,7 +21,6 @@ export default class IndexComponent extends Component {
                     <Link to="/classes">
                         <div className="tile" id="classes">
                             <img src={Class} alt="osztályok" />
-                            <div className="divider"></div>
                             Osztályok
                         </div>
                     </Link>
@@ -30,7 +28,6 @@ export default class IndexComponent extends Component {
                     <Link to="/teachers">
                         <div className="tile" id="teachers">
                             <img src={Teacher} alt="tanárok" />                    
-                            <div className="divider"></div>
                             Tanárok
                         </div>
                     </Link>
@@ -38,12 +35,11 @@ export default class IndexComponent extends Component {
                     <Link to="/classrooms">
                         <div className="tile" id="rooms">
                             <img src={Classroom} alt="tantermek" />
-                            <div className="divider"></div>
                             Tantermek
                         </div>
                     </Link>
                 </div>
             </main>
-        )
+        );
     }
 }

@@ -38,6 +38,7 @@ server.get("/test", (_req, res) => {
     db.query("SELECT * FROM osztaly", (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
+        console.log("GET /test at " + new Date().toLocaleString());
     });
 });
 
@@ -52,8 +53,10 @@ server.post("/login", jsonParser, (req, res) => {
     console.log(req.body.password);
     if (admin.username === req.body.username && admin.password === req.body.password) {
         res.status(200).send();
+        console.log("POST /login (success) at " + new Date().toLocaleString())
     } else {
         res.status(403).send();
+        console.log("POST /login (fail) at " + new Date().toLocaleString())
     }
 });
 
@@ -66,7 +69,7 @@ server.get("/classrooms", (_req, res) => {
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
-        console.log(result);
+        console.log("GET /classrooms at " + new Date().toLocaleString());
     });
 });
 
@@ -76,7 +79,7 @@ server.get("/classrooms/:orderby", (req, res) => {
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
-        console.log(result);
+        console.log(`GET /classrooms/${req.params.orderby} at ` + new Date().toLocaleString());
     });
 });
 
@@ -86,49 +89,52 @@ server.get("/classrooms/:orderby/desc", (req, res) => {
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
-        console.log(result);
+        console.log(`GET /classrooms/${req.params.orderby}/desc at ` + new Date().toLocaleString());
     });
 });
 
 // Teachers
 server.get("/teachers", (_req, res) => {
-    let q = `SELECT tanar.pedagogus_id, tanar.nev, tanitott_targyak.targynev
+    let q = `SELECT tanar.pedagogus_id, tanar.nev, GROUP_CONCAT(tanitott_targyak.targynev SEPARATOR ", ") AS targyak
             FROM tanar, tanitott_targyak
             WHERE tanar.pedagogus_id = tanitott_targyak.pedagogus_id
-            AND tanitott_targyak.targynev != "osztályfőnöki"`
+            AND tanitott_targyak.targynev != "osztályfőnöki"
+            GROUP BY tanar.pedagogus_id`
 
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
-        console.log(result);
+        console.log("GET /teachers at " + new Date().toLocaleString());
     });
 });
 
 server.get("/teachers/:orderby", (req, res) => {
-    let q = `SELECT tanar.pedagogus_id, tanar.nev, tanitott_targyak.targynev
+    let q = `SELECT tanar.pedagogus_id, tanar.nev, GROUP_CONCAT(tanitott_targyak.targynev SEPARATOR ", ") AS targyak
             FROM tanar, tanitott_targyak
             WHERE tanar.pedagogus_id = tanitott_targyak.pedagogus_id
             AND tanitott_targyak.targynev != "osztályfőnöki"
+            GROUP BY tanar.pedagogus_id
             ORDER BY ${req.params.orderby} ASC`
 
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
-        console.log(result);
+        console.log(`GET /teachers/${req.params.orderby}/ at ` + new Date().toLocaleString());
     });
 });
 
 server.get("/teachers/:orderby/desc", (req, res) => {
-    let q = `SELECT tanar.pedagogus_id, tanar.nev, tanitott_targyak.targynev
+    let q = `SELECT tanar.pedagogus_id, tanar.nev, GROUP_CONCAT(tanitott_targyak.targynev SEPARATOR ", ") AS targyak
             FROM tanar, tanitott_targyak
             WHERE tanar.pedagogus_id = tanitott_targyak.pedagogus_id
             AND tanitott_targyak.targynev != "osztályfőnöki"
+            GROUP BY tanar.pedagogus_id
             ORDER BY ${req.params.orderby} DESC`
 
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
-        console.log(result);
+        console.log(`GET /teachers/${req.params.orderby}/desc at ` + new Date().toLocaleString());        
     });
 });
 
@@ -141,7 +147,7 @@ server.get("/classes", (_req, res) => {
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
-        console.log(result);
+        console.log("GET /classes at " + new Date().toLocaleString());        
     });
 });
 
@@ -154,7 +160,7 @@ server.get("/classes/:orderby", (req, res) => {
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
-        console.log(result);
+        console.log(`GET /classes/${req.params.orderby}/ at ` + new Date().toLocaleString());        
     });
 });
 
@@ -167,7 +173,7 @@ server.get("/classes/:orderby/desc", (req, res) => {
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
-        console.log(result);
+        console.log(`GET /classes/${req.params.orderby}/desc at ` + new Date().toLocaleString());
     });
 });
 
@@ -181,20 +187,20 @@ server.get("/schedule", (_req, res) => {
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
-        console.log(result);
+        console.log("GET /schedule at " + new Date().toLocaleString());         
     });
 });
 
-server.get("/schedule/:class_id", (req, res) => {
+server.get("/schedule/:classid", (req, res) => {
     let q = `SELECT ora.ora, ora.nap, ora.nev, ora.teremszam, tanar.nev AS tanar
             FROM ora, tanar
-            WHERE ora.osztaly_id = '${req.params.class_id}'
+            WHERE ora.osztaly_id = '${req.params.classid}'
             AND ora.pedagogus_id = tanar.pedagogus_id`
 
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
-        console.log(result);
+        console.log(`GET /schedule/${req.params.classid} at ` + new Date().toLocaleString());
     });
 });
 
@@ -207,6 +213,6 @@ server.get("/classlist", (_req, res) => {
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
-        console.log(result);
+        console.log("GET /classlist at " + new Date().toLocaleString());
     });
 });
