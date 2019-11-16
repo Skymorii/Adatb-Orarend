@@ -1,5 +1,5 @@
-/* Admin page styling */
-#admin .accordion {
+/* Admin pages styling */
+.admin .accordion {
     margin-top: 1vh;
     padding: 2.5vh;
     width: 100%;
@@ -13,11 +13,11 @@
     font-size: 2.25vh;
 }
   
-#admin .active, #admin .accordion:hover {
+.admin .active, .admin .accordion:hover {
     background-color: #4f3e6b; 
 }
 
-#admin .panel {
+.admin .panel {
     margin-bottom: 3vh;
     padding: 5vh 4vw;
     overflow: hidden;
@@ -25,11 +25,11 @@
     display: none;
 }
 
-#admin .panel h3 {
+.admin .panel h3 {
     margin-top: 0;
 }
 
-#admin input[type=text], #admin input[type=number], #admin select {
+.admin input[type=text], .admin input[type=number], .admin select {
     width: 100%;
     padding: 1.5vh;
     margin-top: 1vh;
@@ -42,29 +42,65 @@
     font-size: 2vh;
 }
 
-#admin input[type=text]:focus, #admin input[type=number]:focus, #admin select:focus {
+.admin input[type=text]:focus, .admin input[type=number]:focus, .admin select:focus {
     background-color: #e5d7ec;
 }
 
-#admin input[type=submit] {
+.admin input[type=submit] {
     padding: 1.5vh 1.1vw;
 
     background-color: #8a65a1;
 }
 
-#admin input[type=submit]:hover {
+.admin input[type=submit]:hover {
     background-color: #4f3e6b;
 }
 
-#admin .deletebtn {
+.admin .deletebtn {
     background-color: #b63535 !important;
 }
 
-#admin .deletebtn:hover {
+.admin .deletebtn:hover {
     background-color: #922525 !important;
 }
 
-#admin hr {
+.admin hr {
     margin-top: 5vh;
     margin-bottom: 5vh;
+}
+
+/* Main admin page styling */
+#mainadmin div {
+    display: flex;
+    flex-flow: column;
+}
+
+#mainadmin a {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#mainadmin .tile {
+    width: 100%;
+    height: 15vh;
+    margin-right: 1vh;
+    margin-bottom: 1vh;
+    
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #4f3e6b;
+}
+
+#mainadmin .tile:hover {
+    background-color: #8a65a1;
+}
+
+#mainadmin .tile img {
+    height: 10vh;
+    margin-right: 2vw;
 }

@@ -134,7 +134,7 @@ server.get("/teachers/:orderby/desc", (req, res) => {
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
-        console.log(`GET /teachers/${req.params.orderby}/desc at ` + new Date().toLocaleString());        
+        console.log(`GET /teachers/${req.params.orderby}/desc at ` + new Date().toLocaleString());
     });
 });
 
@@ -147,7 +147,7 @@ server.get("/classes", (_req, res) => {
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
-        console.log("GET /classes at " + new Date().toLocaleString());        
+        console.log("GET /classes at " + new Date().toLocaleString());
     });
 });
 
@@ -160,7 +160,7 @@ server.get("/classes/:orderby", (req, res) => {
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
-        console.log(`GET /classes/${req.params.orderby}/ at ` + new Date().toLocaleString());        
+        console.log(`GET /classes/${req.params.orderby}/ at ` + new Date().toLocaleString());
     });
 });
 
@@ -186,7 +186,7 @@ server.get("/lessons", (req, res) => {
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
-        console.log("GET /lessons at " + new Date().toLocaleString());         
+        console.log("GET /lessons at " + new Date().toLocaleString());
     });
 });
 
@@ -199,7 +199,7 @@ server.get("/schedule", (_req, res) => {
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
-        console.log("GET /schedule at " + new Date().toLocaleString());         
+        console.log("GET /schedule at " + new Date().toLocaleString());
     });
 });
 

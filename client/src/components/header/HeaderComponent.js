@@ -8,7 +8,7 @@ export default class HeaderComponent extends Component {
                 <div id="logo">
                     <Link to="/">Zsírkréta Napló</Link>
                 </div>
-        
+
                 <nav id="navlinks">
                     <ul>
                         <li>
@@ -25,7 +25,7 @@ export default class HeaderComponent extends Component {
                         </li>
                     </ul>
                 </nav>
-                
+
                 <ul id="login">
                     <li>
                         <Link to="/login">Belépés</Link>

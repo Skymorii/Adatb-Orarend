@@ -13,49 +13,49 @@ export default class ClassroomList extends Component {
     async fetchData(orderBy = "") {
         let classrooms = [];
         await Axios.get(`http://localhost:4000/classrooms/${orderBy}`)
-             .then(response => {
-                 response.data.forEach(classroom => {
-                    classrooms.push(<ClassroomComponent classroom = {classroom}/>);
-                 });
-             })
-             .catch(error => { console.log("Error in ClassroomList fetchData") });
+            .then(response => {
+                response.data.forEach(classroom => {
+                    classrooms.push(<ClassroomComponent classroom={classroom} />);
+                });
+            })
+            .catch(error => { console.log("Error in ClassroomList fetchData") });
         this.setState({ classrooms: classrooms });
     }
 
     async fetchDataDesc(orderBy = "") {
         let classrooms = [];
         await Axios.get(`http://localhost:4000/classrooms/${orderBy}/desc`)
-             .then(response => {
-                 response.data.forEach(classroom => {
-                    classrooms.push(<ClassroomComponent classroom = {classroom}/>);
-                 });
-             })
-             .catch(error => { console.log("Error in ClassroomList fetchDataDesc") });
+            .then(response => {
+                response.data.forEach(classroom => {
+                    classrooms.push(<ClassroomComponent classroom={classroom} />);
+                });
+            })
+            .catch(error => { console.log("Error in ClassroomList fetchDataDesc") });
         this.setState({ classrooms: classrooms });
     }
-    
+
     async componentDidMount() {
         await this.fetchData();
     };
-    
+
     async changeOrderClassroom(orderBy, e) {
         e.preventDefault();
-        this.setState({classrooms: []});
+        this.setState({ classrooms: [] });
         await this.fetchData(orderBy);
     }
 
     async changeOrderClassroomDesc(orderBy, e) {
         e.preventDefault();
-        this.setState({classrooms: []});
+        this.setState({ classrooms: [] });
         await this.fetchDataDesc(orderBy);
     }
-    
+
     render() {
         return (
             <main>
                 <div>
                     <h1>Tantermek</h1>
-                    
+
                     <div>
                         <h2>Lista rendezése</h2>
                         <h3>Növekvő sorrend</h3>
@@ -65,7 +65,7 @@ export default class ClassroomList extends Component {
                         <h3>Csökkenő sorrend</h3>
                         <button onClick={(e) => this.changeOrderClassroomDesc("teremszam", e)}>Teremszám</button>
                         <button onClick={(e) => this.changeOrderClassroomDesc("kapacitas", e)}>Kapacitás</button>
-                        <button onClick={(e) => this.changeOrderClassroomDesc("gepterem_e", e)}>Gépterem</button>                        
+                        <button onClick={(e) => this.changeOrderClassroomDesc("gepterem_e", e)}>Gépterem</button>
                     </div>
 
                     <h2>Tantermek listája</h2>

@@ -17,21 +17,21 @@ export default class IndexComponent extends Component {
                             Órarendek
                         </div>
                     </Link>
-                    
+
                     <Link to="/classes">
                         <div className="tile" id="classes">
                             <img src={Class} alt="osztályok" />
                             Osztályok
                         </div>
                     </Link>
-                    
+
                     <Link to="/teachers">
                         <div className="tile" id="teachers">
-                            <img src={Teacher} alt="tanárok" />                    
+                            <img src={Teacher} alt="tanárok" />
                             Tanárok
                         </div>
                     </Link>
-                    
+
                     <Link to="/classrooms">
                         <div className="tile" id="rooms">
                             <img src={Classroom} alt="tantermek" />

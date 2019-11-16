@@ -7,7 +7,7 @@ export default class FooterComponent extends Component {
                 <div id="topic">
                     2019 | Órarend | Adatbázisok kötelező program
                 </div>
-                
+
                 <div id="name">
                     Hergert Lea
                     <div className="divider"></div>
