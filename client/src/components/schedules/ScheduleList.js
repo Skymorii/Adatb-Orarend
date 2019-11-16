@@ -62,7 +62,7 @@ export default class ScheduleList extends Component {
     render() {
         return (
             <main>
-                <div>
+                <div id="schedule">
                     <h1>Órarendek</h1>
                     <h2>Osztály</h2>
                     <select onChange={(e) => this.changeSchedule(e.target.value, e)}>
@@ -72,7 +72,7 @@ export default class ScheduleList extends Component {
                     <table>
                         <tbody>
                             <tr>
-                                <th></th>
+                                <th>Óra</th>
                                 <th>Hétfő</th>
                                 <th>Kedd</th>
                                 <th>Szerda</th>

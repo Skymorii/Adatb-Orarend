@@ -178,6 +178,18 @@ server.get("/classes/:orderby/desc", (req, res) => {
 });
 
 // Schedules
+server.get("/lessons", (req, res) => {
+    let q = `SELECT ora.teremszam, ora.nap, ora.ora, ora.osztaly_id, tanar.nev AS tanar, ora.nev
+            FROM ora, tanar
+            WHERE ora.pedagogus_id = tanar.pedagogus_id`
+
+    db.query(q, (err, result) => {
+        if (err) throw err;
+        res.status(200).send(result);
+        console.log("GET /lessons at " + new Date().toLocaleString());         
+    });
+});
+
 server.get("/schedule", (_req, res) => {
     let q = `SELECT ora.ora, ora.nap, ora.nev, ora.teremszam, tanar.nev AS tanar
             FROM ora, tanar
@@ -214,5 +226,16 @@ server.get("/classlist", (_req, res) => {
         if (err) throw err;
         res.status(200).send(result);
         console.log("GET /classlist at " + new Date().toLocaleString());
+    });
+});
+
+//Subjects
+server.get("/subjects", (_req, res) => {
+    let q = `SELECT * FROM tantargy ORDER BY tantargy.nev ASC`
+
+    db.query(q, (err, result) => {
+        if (err) throw err;
+        res.status(200).send(result);
+        console.log(`GET /subjects at ` + new Date().toLocaleString());
     });
 });

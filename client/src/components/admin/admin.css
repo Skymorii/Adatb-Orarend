@@ -1,0 +1,70 @@
+/* Admin page styling */
+#admin .accordion {
+    margin-top: 1vh;
+    padding: 2.5vh;
+    width: 100%;
+    
+    background-color: #8a65a1;
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    text-align: left;
+    font-size: 2.25vh;
+}
+  
+#admin .active, #admin .accordion:hover {
+    background-color: #4f3e6b; 
+}
+
+#admin .panel {
+    margin-bottom: 3vh;
+    padding: 5vh 4vw;
+    overflow: hidden;
+    background-color: #f2f2f2;
+    display: none;
+}
+
+#admin .panel h3 {
+    margin-top: 0;
+}
+
+#admin input[type=text], #admin input[type=number], #admin select {
+    width: 100%;
+    padding: 1.5vh;
+    margin-top: 1vh;
+    margin-bottom: 3vh;
+    
+    box-sizing: border-box;
+    border: 1px solid #666666;
+    
+    outline: none;
+    font-size: 2vh;
+}
+
+#admin input[type=text]:focus, #admin input[type=number]:focus, #admin select:focus {
+    background-color: #e5d7ec;
+}
+
+#admin input[type=submit] {
+    padding: 1.5vh 1.1vw;
+
+    background-color: #8a65a1;
+}
+
+#admin input[type=submit]:hover {
+    background-color: #4f3e6b;
+}
+
+#admin .deletebtn {
+    background-color: #b63535 !important;
+}
+
+#admin .deletebtn:hover {
+    background-color: #922525 !important;
+}
+
+#admin hr {
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}

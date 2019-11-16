@@ -152,7 +152,7 @@ button:hover {
 }
 
 table {
-    min-width: 45%;
+    width: 100%;
     border-collapse: collapse;
 }
 
@@ -163,7 +163,7 @@ table tr th {
 }
 
 table tr th, table tr td {
-    padding: 1vh;
+    padding: 1.75vh 6vh;
     text-align: center;
     white-space: nowrap;
 }
