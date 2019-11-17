@@ -7,10 +7,15 @@ export default class ModifySubjects extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            subjects: []
+            subjects: [],
+            add_nev: "",
+            modify_nev: "",
+            modify_nev_new: "",
+            delete_subject: ""
         }
     }
 
+    // Get
     async fetchDataSubjects() {
         let temp = [];
         await Axios.get(`http://localhost:4000/subjects`)
@@ -27,6 +32,82 @@ export default class ModifySubjects extends Component {
         await this.fetchDataSubjects();
     }
 
+    // Post
+    add_enterSubjectName(event) {
+        event.preventDefault();
+        this.setState({ add_nev: event.target.value });
+    }
+
+    async add_subject(event) {
+        event.preventDefault();
+
+        if (this.state.add_nev.length > 255 || this.state.add_nev.length <= 0) {
+            alert("Nem megfelelő a tantárgy neve!");
+        } else {
+            Axios.post("http://localhost:4000/add/subject", {
+                nev: this.state.add_nev
+            })
+                .then(async resp => {
+                    console.log("Subject added successfully");
+                    alert("Tantárgy hozzáadása sikeres!");
+                    this.setState({ add_nev: "" });
+                    await this.fetchDataSubjects();
+                })
+                .catch(err => { console.log("Error in ModifySubjects add_subject") });
+        }
+    }
+
+    modify_chosenSubject(event) {
+        event.preventDefault();
+        this.setState({ modify_nev: event.target.value });
+    }
+
+    modify_enterSubjectName(event) {
+        event.preventDefault();
+        this.setState({ modify_nev_new: event.target.value });
+    }
+
+    async modify_subject(event) {
+        event.preventDefault();
+
+        if (this.state.modify_nev_new.length > 255 || this.state.modify_nev_new.length <= 0) {
+            alert("Nem megfelelő a tantárgy neve!");
+        } else {
+            Axios.post("http://localhost:4000/modify/subject", {
+                new_nev: this.state.modify_nev_new,
+                old_nev: this.state.modify_nev
+            })
+                .then(async resp => {
+                    console.log("Subject added successfully");
+                    alert("Tantárgy módosítása sikeres!");
+                    this.setState({ modify_nev_new: "" });
+                    this.setState({ modify_nev: "" });
+                    await this.fetchDataSubjects();
+                })
+                .catch(err => { console.log("Error in ModifySubjects modify_subject") });
+        }
+    }
+
+    delete_chosenSubject(event) {
+        event.preventDefault();
+        this.setState({ delete_subject: event.target.value });
+    }
+
+    async delete_subject(event) {
+        event.preventDefault();
+
+        Axios.post("http://localhost:4000/delete/subject", {
+            nev: this.state.delete_subject
+        })
+            .then(async resp => {
+                console.log("Subject deleted successfully");
+                alert("Tantárgy törlése sikeres!");
+                this.setState({ delete_subject: "" });
+                await this.fetchDataSubjects();
+            })
+            .catch(err => { console.log("Error in ModifySubjects delete_subject") });
+    }
+
     render() {
         return (
             <main className="admin">
@@ -34,9 +115,9 @@ export default class ModifySubjects extends Component {
 
                 <button className="accordion" id="addsubject" onClick={(e) => accordion(e.target.id)}>Tantárgy hozzáadása</button>
                 <div className="panel">
-                    <form name="addsubject">
+                    <form onSubmit={this.add_subject.bind(this)}>
                         Tanárgy neve:
-                        <input type="text" name="nev" placeholder="Tantárgy neve" maxLength="255" required />
+                        <input type="text" value={this.state.add_nev} name="nev" placeholder="Tantárgy neve" maxLength="255" required onChange={this.add_enterSubjectName.bind(this)} />
                         <input type="submit" value="Hozzáadás" />
                     </form>
                 </div>
@@ -44,14 +125,14 @@ export default class ModifySubjects extends Component {
 
                 <button className="accordion" id="modifysubject" onClick={(e) => accordion(e.target.id)}>Tantárgy módosítása</button>
                 <div className="panel">
-                    <form name="modifysubject">
+                    <form onSubmit={this.modify_subject.bind(this)}>
                         Módosítandó tantárgy kiválasztása:
-                        <select name="nev_tomodify">
+                        <select name="nev_tomodify" value={this.state.modify_nev} onChange={this.modify_chosenSubject.bind(this)}>
                             <option selected disabled></option>
                             {this.state.subjects}
                         </select>
                         Tanárgy neve:
-                        <input type="text" name="nev" placeholder="Tantárgy neve" maxLength="255" required />
+                        <input type="text" value={this.state.modify_nev_new} name="nev" placeholder="Tantárgy neve" maxLength="255" required onChange={this.modify_enterSubjectName.bind(this)}/>
                         <input type="submit" value="Módosítás" />
                     </form>
                 </div>
@@ -59,9 +140,9 @@ export default class ModifySubjects extends Component {
 
                 <button className="accordion" id="deletesubject" onClick={(e) => accordion(e.target.id)}>Tantárgy törlése</button>
                 <div className="panel">
-                    <form name="deletesubject">
+                    <form onSubmit={this.delete_subject.bind(this)}>
                         Törlendő tantárgy kiválasztása:
-                        <select name="nev_todelete">
+                        <select name="nev_todelete" value={this.state.delete_subject} onChange={this.delete_chosenSubject.bind(this)}>
                             <option selected disabled></option>
                             {this.state.subjects}
                         </select>

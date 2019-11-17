@@ -10,7 +10,7 @@ const db = sql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'orarend'
+    database: 'schedule'
 });
 
 const port = process.env.PORT || 4000;
@@ -64,7 +64,7 @@ server.post("/login", jsonParser, (req, res) => {
 
 // Classrooms
 server.get("/classrooms", (_req, res) => {
-    let q = "SELECT * FROM terem"
+    let q = "SELECT * FROM terem";
 
     db.query(q, (err, result) => {
         if (err) throw err;
@@ -74,7 +74,7 @@ server.get("/classrooms", (_req, res) => {
 });
 
 server.get("/classrooms/:orderby", (req, res) => {
-    let q = `SELECT * FROM terem ORDER BY ${req.params.orderby} ASC`
+    let q = `SELECT * FROM terem ORDER BY ${req.params.orderby} ASC`;
 
     db.query(q, (err, result) => {
         if (err) throw err;
@@ -84,7 +84,7 @@ server.get("/classrooms/:orderby", (req, res) => {
 });
 
 server.get("/classrooms/:orderby/desc", (req, res) => {
-    let q = `SELECT * FROM terem ORDER BY ${req.params.orderby} DESC`
+    let q = `SELECT * FROM terem ORDER BY ${req.params.orderby} DESC`;
 
     db.query(q, (err, result) => {
         if (err) throw err;
@@ -99,7 +99,7 @@ server.get("/teachers", (_req, res) => {
             FROM tanar, tanitott_targyak
             WHERE tanar.pedagogus_id = tanitott_targyak.pedagogus_id
             AND tanitott_targyak.targynev != "osztályfőnöki"
-            GROUP BY tanar.pedagogus_id`
+            GROUP BY tanar.pedagogus_id`;
 
     db.query(q, (err, result) => {
         if (err) throw err;
@@ -114,7 +114,7 @@ server.get("/teachers/:orderby", (req, res) => {
             WHERE tanar.pedagogus_id = tanitott_targyak.pedagogus_id
             AND tanitott_targyak.targynev != "osztályfőnöki"
             GROUP BY tanar.pedagogus_id
-            ORDER BY ${req.params.orderby} ASC`
+            ORDER BY ${req.params.orderby} ASC`;
 
     db.query(q, (err, result) => {
         if (err) throw err;
@@ -129,7 +129,7 @@ server.get("/teachers/:orderby/desc", (req, res) => {
             WHERE tanar.pedagogus_id = tanitott_targyak.pedagogus_id
             AND tanitott_targyak.targynev != "osztályfőnöki"
             GROUP BY tanar.pedagogus_id
-            ORDER BY ${req.params.orderby} DESC`
+            ORDER BY ${req.params.orderby} DESC`;
 
     db.query(q, (err, result) => {
         if (err) throw err;
@@ -142,7 +142,7 @@ server.get("/teachers/:orderby/desc", (req, res) => {
 server.get("/classes", (_req, res) => {
     let q = `SELECT osztaly.osztaly_id, osztaly.kezdes_eve, osztaly.vegzes_eve, osztaly.letszam, tanar.nev, osztaly.teremszam
             FROM osztaly, tanar
-            WHERE osztaly.pedagogus_id = tanar.pedagogus_id`
+            WHERE osztaly.pedagogus_id = tanar.pedagogus_id`;
 
     db.query(q, (err, result) => {
         if (err) throw err;
@@ -155,7 +155,7 @@ server.get("/classes/:orderby", (req, res) => {
     let q = `SELECT osztaly.osztaly_id, osztaly.kezdes_eve, osztaly.vegzes_eve, osztaly.letszam, tanar.nev, osztaly.teremszam
             FROM osztaly, tanar
             WHERE osztaly.pedagogus_id = tanar.pedagogus_id
-            ORDER BY ${req.params.orderby} ASC`
+            ORDER BY ${req.params.orderby} ASC`;
 
     db.query(q, (err, result) => {
         if (err) throw err;
@@ -168,7 +168,7 @@ server.get("/classes/:orderby/desc", (req, res) => {
     let q = `SELECT osztaly.osztaly_id, osztaly.kezdes_eve, osztaly.vegzes_eve, osztaly.letszam, tanar.nev, osztaly.teremszam
             FROM osztaly, tanar
             WHERE osztaly.pedagogus_id = tanar.pedagogus_id
-            ORDER BY ${req.params.orderby} DESC`
+            ORDER BY ${req.params.orderby} DESC`;
 
     db.query(q, (err, result) => {
         if (err) throw err;
@@ -181,7 +181,7 @@ server.get("/classes/:orderby/desc", (req, res) => {
 server.get("/lessons", (req, res) => {
     let q = `SELECT ora.teremszam, ora.nap, ora.ora, ora.osztaly_id, tanar.nev AS tanar, ora.nev
             FROM ora, tanar
-            WHERE ora.pedagogus_id = tanar.pedagogus_id`
+            WHERE ora.pedagogus_id = tanar.pedagogus_id`;
 
     db.query(q, (err, result) => {
         if (err) throw err;
@@ -194,7 +194,7 @@ server.get("/schedule", (_req, res) => {
     let q = `SELECT ora.ora, ora.nap, ora.nev, ora.teremszam, tanar.nev AS tanar
             FROM ora, tanar
             WHERE ora.osztaly_id = '11a'
-            AND ora.pedagogus_id = tanar.pedagogus_id`
+            AND ora.pedagogus_id = tanar.pedagogus_id`;
 
     db.query(q, (err, result) => {
         if (err) throw err;
@@ -207,7 +207,7 @@ server.get("/schedule/:classid", (req, res) => {
     let q = `SELECT ora.ora, ora.nap, ora.nev, ora.teremszam, tanar.nev AS tanar
             FROM ora, tanar
             WHERE ora.osztaly_id = '${req.params.classid}'
-            AND ora.pedagogus_id = tanar.pedagogus_id`
+            AND ora.pedagogus_id = tanar.pedagogus_id`;
 
     db.query(q, (err, result) => {
         if (err) throw err;
@@ -220,7 +220,7 @@ server.get("/classlist", (_req, res) => {
     let q = `SELECT osztaly.osztaly_id, tanar.nev AS tanar
             FROM osztaly, tanar
             WHERE osztaly.pedagogus_id = tanar.pedagogus_id
-            GROUP BY osztaly.osztaly_id`
+            GROUP BY osztaly.osztaly_id`;
 
     db.query(q, (err, result) => {
         if (err) throw err;
@@ -229,13 +229,53 @@ server.get("/classlist", (_req, res) => {
     });
 });
 
-//Subjects
+// Subjects
 server.get("/subjects", (_req, res) => {
-    let q = `SELECT * FROM tantargy ORDER BY tantargy.nev ASC`
+    let q = `SELECT * FROM tantargy ORDER BY tantargy.nev ASC`;
 
     db.query(q, (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
         console.log(`GET /subjects at ` + new Date().toLocaleString());
+    });
+});
+
+// Post requests
+server.post("/add/subject", jsonParser, (req, res) => {
+    let q = `INSERT INTO tantargy (tantargy.nev) VALUES ('${req.body.nev}');`;
+
+    db.query(q, (err, result) => {
+        if (err) {
+            res.status(418).send();
+        } else {
+            res.status(200).send();
+            console.log(`POST /add/subject at ` + new Date().toLocaleString());
+        }
+    });
+});
+
+server.post("/modify/subject", jsonParser, (req, res) => {
+    let q = `UPDATE tantargy SET nev='${req.body.new_nev}' WHERE nev='${req.body.old_nev}';`;
+
+    db.query(q, (err, result) => {
+        if (err) {
+            res.status(418).send();
+        } else {
+            res.status(200).send();
+            console.log(`POST /modify/subject at ` + new Date().toLocaleString());
+        }
+    });
+});
+
+server.post("/delete/subject", jsonParser, (req, res) => {
+    let q = `DELETE FROM tantargy WHERE tantargy.nev = '${req.body.nev}';`;
+
+    db.query(q, (err, result) => {
+        if (err) {
+            res.status(418).send();
+        } else {
+            res.status(200).send();
+            console.log(`POST /delete/subject at ` + new Date().toLocaleString());
+        }
     });
 });
