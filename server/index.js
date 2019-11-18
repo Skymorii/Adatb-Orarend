@@ -255,7 +255,7 @@ server.post("/add/subject", jsonParser, (req, res) => {
 });
 
 server.post("/modify/subject", jsonParser, (req, res) => {
-    let q = `UPDATE tantargy SET nev='${req.body.new_nev}' WHERE nev='${req.body.old_nev}';`;
+    let q = `UPDATE tantargy SET tantargy.nev='${req.body.new_nev}' WHERE tantargy.nev='${req.body.old_nev}';`;
 
     db.query(q, (err, result) => {
         if (err) {
@@ -276,6 +276,47 @@ server.post("/delete/subject", jsonParser, (req, res) => {
         } else {
             res.status(200).send();
             console.log(`POST /delete/subject at ` + new Date().toLocaleString());
+        }
+    });
+});
+
+server.post("/add/classroom", jsonParser, (req, res) => {
+    let q = `INSERT INTO terem (terem.teremszam, terem.kapacitas, terem.gepterem_e)
+            VALUES ('${req.body.teremszam}', ${req.body.kapacitas}, ${req.body.gepterem_e});`;
+
+    db.query(q, (err, result) => {
+        if (err) {
+            res.status(418).send();
+        } else {
+            res.status(200).send();
+            console.log(`POST /add/classroom at ` + new Date().toLocaleString());
+        }
+    });
+});
+
+server.post("/modify/classroom", jsonParser, (req, res) => {
+    let q = `UPDATE terem SET terem.teremszam='${req.body.new_teremszam}', terem.kapacitas=${req.body.new_kapacitas}, terem.gepterem_e=${req.body.new_gepterem_e} 
+            WHERE terem.teremszam='${req.body.old_teremszam}';`;
+
+    db.query(q, (err, result) => {
+        if (err) {
+            res.status(418).send();
+        } else {
+            res.status(200).send();
+            console.log(`POST /modify/subject at ` + new Date().toLocaleString());
+        }
+    });
+});
+
+server.post("/delete/classroom", jsonParser, (req, res) => {
+    let q = `DELETE FROM terem WHERE terem.teremszam = '${req.body.teremszam}';`;
+
+    db.query(q, (err, result) => {
+        if (err) {
+            res.status(418).send();
+        } else {
+            res.status(200).send();
+            console.log(`POST /delete/classroom at ` + new Date().toLocaleString());
         }
     });
 });

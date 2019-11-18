@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
+import { Link } from 'react-router-dom';
 import { accordion } from './AdminComponent';
 import './admin.css'
 
@@ -188,6 +189,11 @@ export default class ModifyLessons extends Component {
                         <input type="submit" value="Törlés" className="deletebtn" />
                     </form>
                 </div>
+                
+
+                <Link to="/admin">
+                    <button className="toadmin">Vissza az admin felületre</button>
+                </Link>
             </main>
         );
     }

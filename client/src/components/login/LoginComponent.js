@@ -30,10 +30,13 @@ export default class LoginComponent extends Component {
             password: this.state.password
         })
             .then(respone => {
-                console.log("Sikeres bejelentkezés");
+                console.log("Login success");
                 this.setState({ redirect: <Redirect to="/admin" /> })
             })
-            .catch(error => alert("Sikertelen bejelentkezés\nHibás felhasználónév vagy jelszó"))
+            .catch(error => {
+                console.log("Login failed");
+                alert("Sikertelen bejelentkezés\nHibás felhasználónév vagy jelszó");
+            });
     }
 
     render() {

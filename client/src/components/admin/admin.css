@@ -69,6 +69,11 @@
     margin-bottom: 5vh;
 }
 
+.admin .toadmin {
+    margin-top: 3vh;
+    padding: 2vh;
+}
+
 /* Main admin page styling */
 #mainadmin div {
     display: flex;
