@@ -12,21 +12,19 @@ export default class ModifyLessons extends Component {
             classes: [],
             teachers: [],
             subjects: [],
-            classrooms: []
-        }
-    }
+            classrooms: [],
 
-    async fetchDataLessons() {
-        let temp = [];
-        await Axios.get(`http://localhost:4000/lessons`)
-            .then(response => {
-                response.data.forEach(lesson => {
-                    temp.push(<option value={lesson.teremszam + lesson.nap + lesson.ora}>Nap: {lesson.nap} - Óra: {lesson.ora} - Terem: {lesson.teremszam}</option>);
-                });
-            })
-            .catch(error => { console.log("Error in AdminComponent fetchDataClasses") });
-        console.log(temp);
-        this.setState({ lessons: temp });
+            add_teremszam: "",
+            add_nap: "",
+            add_ora: "",
+            add_osztaly: "",
+            add_tanar: "",
+            add_tantargy: "",
+
+            delete_teremszam: "",
+            delete_nap: "",
+            delete_ora: "",
+        }
     }
 
     async fetchDataClasses() {
@@ -82,11 +80,113 @@ export default class ModifyLessons extends Component {
     }
 
     async componentDidMount() {
-        await this.fetchDataLessons();
         await this.fetchDataClasses();
         await this.fetchDataClassrooms();
         await this.fetchDataSubjects();
         await this.fetchDataTeachers();
+    }
+
+    // Post add
+    add_enterLessonRoom(event) {
+        event.preventDefault();
+        this.setState({ add_teremszam: event.target.value });
+    }
+
+    add_enterLessonDay(event) {
+        event.preventDefault();
+        this.setState({ add_nap: event.target.value });
+    }
+
+    add_enterLessonNumber(event) {
+        event.preventDefault();
+        this.setState({ add_ora: event.target.value });
+    }
+
+    add_enterLessonClass(event) {
+        event.preventDefault();
+        this.setState({ add_osztaly: event.target.value });
+    }
+
+    add_enterLessonTeacher(event) {
+        event.preventDefault();
+        this.setState({ add_tanar: event.target.value });
+    }
+
+    add_enterLessonSubject(event) {
+        event.preventDefault();
+        this.setState({ add_tantargy: event.target.value });
+    }
+
+    async add_lesson(event) {
+        event.preventDefault();
+
+        if (this.state.add_ora < 0 || this.state.add_ora > 9) {
+            alert("Nem megfelelő adatok!");
+        } else {
+            Axios.post("http://localhost:4000/add/lesson", {
+                teremszam: this.state.add_teremszam,
+                nap: this.state.add_nap,
+                ora: this.state.add_ora,
+                osztaly_id: this.state.add_osztaly,
+                pedagogus_id: this.state.add_tanar,
+                nev: this.state.add_tantargy
+            })
+                .then(async resp => {
+                    console.log("Lesson added successfully");
+                    alert("Óra hozzáadása sikeres!");
+                    this.setState({
+                        add_teremszam: "",
+                        add_nap: "",
+                        add_ora: "",
+                        add_osztaly: "",
+                        add_tanar: "",
+                        add_tantargy: ""
+                    });
+                })
+                .catch(err => {
+                    console.log("Error in ModifyLessons add_lesson");
+                    alert("Hiba történt");
+                });
+        }
+    }
+
+    // Post delete
+    delete_enterLessonRoom(event) {
+        event.preventDefault();
+        this.setState({ delete_teremszam: event.target.value });
+    }
+
+    delete_enterLessonDay(event) {
+        event.preventDefault();
+        this.setState({ delete_nap: event.target.value });
+    }
+
+    delete_enterLessonNumber(event) {
+        event.preventDefault();
+        this.setState({ delete_ora: event.target.value });
+    }
+
+    async delete_lesson(event) {
+        event.preventDefault();
+
+        Axios.post("http://localhost:4000/delete/lesson", {
+            teremszam: this.state.delete_teremszam,
+            nap: this.state.delete_nap,
+            ora: this.state.delete_ora
+        })
+            .then(async resp => {
+                console.log("Lesson deleted successfully");
+                alert("Óra törlése sikeres!");
+                this.setState({
+                    delete_teremszam: "",
+                    delete_nap: "",
+                    delete_ora: ""
+                });
+            })
+            .catch(err => {
+                console.log("Error in ModifyLessons delete_lesson");
+                alert("Hiba történt");
+            });
     }
 
     render() {
@@ -96,14 +196,14 @@ export default class ModifyLessons extends Component {
 
                 <button className="accordion" id="addlesson" onClick={(e) => accordion(e.target.id)}>Óra hozzáadása</button>
                 <div className="panel">
-                    <form name="addlesson">
+                    <form onSubmit={this.add_lesson.bind(this)}>
                         Terem:
-                        <select name="teremszam">
+                        <select value={this.state.add_teremszam} onChange={this.add_enterLessonRoom.bind(this)}>
                             <option selected disabled></option>
                             {this.state.classrooms}
                         </select>
                         Nap:
-                        <select name="nap">
+                        <select value={this.state.add_nap} onChange={this.add_enterLessonDay.bind(this)}>
                             <option selected disabled></option>
                             <option value="Hétfő">Hétfő</option>
                             <option value="Kedd">Kedd</option>
@@ -112,19 +212,19 @@ export default class ModifyLessons extends Component {
                             <option value="Péntek">Péntek</option>
                         </select>
                         Óra:
-                        <input type="number" name="ora" placeholder="Óra" min="0" max="8" required /> <br />
+                        <input type="number" name="ora" placeholder="Óra" min="0" max="8" required value={this.state.add_ora} onChange={this.add_enterLessonNumber.bind(this)}/> <br />
                         Osztály:
-                        <select name="osztaly_id">
+                        <select value={this.state.add_osztaly} onChange={this.add_enterLessonClass.bind(this)}>
                             <option selected disabled></option>
                             {this.state.classes}
                         </select>
                         Tanár:
-                        <select name="pedagogus_id">
+                        <select value={this.state.add_tanar} onChange={this.add_enterLessonTeacher.bind(this)}>
                             <option selected disabled></option>
                             {this.state.teachers}
                         </select>
                         Tantárgy:
-                        <select name="nev">
+                        <select value={this.state.add_tantargy} onChange={this.add_enterLessonSubject.bind(this)}>
                             <option selected disabled></option>
                             {this.state.subjects}
                         </select>
@@ -135,16 +235,28 @@ export default class ModifyLessons extends Component {
 
                 <button className="accordion" id="deletelesson" onClick={(e) => accordion(e.target.id)}>Óra törlése</button>
                 <div className="panel">
-                    <form name="deletelesson">
-                        Törlendő tantárgy kiválasztása:
-                        <select name="tanora_todelete">
+                    <form onSubmit={this.delete_lesson.bind(this)}>
+                        Terem:
+                        <select value={this.state.delete_teremszam} onChange={this.delete_enterLessonRoom.bind(this)}>
                             <option selected disabled></option>
-                            {this.state.lessons}
+                            {this.state.classrooms}
                         </select>
+                        Nap:
+                        <select value={this.state.delete_nap} onChange={this.delete_enterLessonDay.bind(this)}>
+                            <option selected disabled></option>
+                            <option value="Hétfő">Hétfő</option>
+                            <option value="Kedd">Kedd</option>
+                            <option value="Szerda">Szerda</option>
+                            <option value="Csütörtök">Csütörtök</option>
+                            <option value="Péntek">Péntek</option>
+                        </select>
+                        Óra:
+                        <input type="number" name="ora" placeholder="Óra" min="0" max="8" required value={this.state.delete_ora} onChange={this.delete_enterLessonNumber.bind(this)}/> <br />
+
                         <input type="submit" value="Törlés" className="deletebtn" />
                     </form>
                 </div>
-                
+
 
                 <Link to="/admin">
                     <button className="toadmin">Vissza az admin felületre</button>
