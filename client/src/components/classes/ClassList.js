@@ -14,8 +14,8 @@ export default class ClassList extends Component {
         let classes = [];
         await Axios.get(`http://localhost:4000/classes/${orderBy}`)
             .then(response => {
-                response.data.forEach(classc => {
-                    classes.push(<ClassComponent classc={classc} />);
+                response.data.forEach(classid => {
+                    classes.push(<ClassComponent classid={classid} />);
                 });
             })
             .catch(error => { console.log("Error in ClassList fetchData") });
@@ -26,8 +26,8 @@ export default class ClassList extends Component {
         let classes = [];
         await Axios.get(`http://localhost:4000/classes/${orderBy}/desc`)
             .then(response => {
-                response.data.forEach(classc => {
-                    classes.push(<ClassComponent classc={classc} />);
+                response.data.forEach(classid => {
+                    classes.push(<ClassComponent classid={classid} />);
                 });
             })
             .catch(error => { console.log("Error in ClassList fetchDataDesc") });
@@ -61,15 +61,13 @@ export default class ClassList extends Component {
                         <h2>Lista rendezése</h2>
                         <h3>Növekvő sorrend</h3>
                         <button onClick={(e) => this.changeOrderClass("osztaly_id", e)}>Osztály</button>
-                        <button onClick={(e) => this.changeOrderClass("kezdes_eve", e)}>Kezdés éve</button>
-                        <button onClick={(e) => this.changeOrderClass("vegzes_eve", e)}>Végzés éve</button>
+                        <button onClick={(e) => this.changeOrderClass("kezdes_eve", e)}>Évszám</button>
                         <button onClick={(e) => this.changeOrderClass("letszam", e)}>Létszám</button>
                         <button onClick={(e) => this.changeOrderClass("nev", e)}>Osztályfőnök</button>
                         <button onClick={(e) => this.changeOrderClass("teremszam", e)}>Osztályterem</button>
                         <h3>Csökkenő sorrend</h3>
                         <button onClick={(e) => this.changeOrderClassDesc("osztaly_id", e)}>Osztály</button>
-                        <button onClick={(e) => this.changeOrderClassDesc("kezdes_eve", e)}>Kezdés éve</button>
-                        <button onClick={(e) => this.changeOrderClassDesc("vegzes_eve", e)}>Végzés éve</button>
+                        <button onClick={(e) => this.changeOrderClassDesc("kezdes_eve", e)}>Évszám</button>
                         <button onClick={(e) => this.changeOrderClassDesc("letszam", e)}>Létszám</button>
                         <button onClick={(e) => this.changeOrderClassDesc("nev", e)}>Osztályfőnök</button>
                         <button onClick={(e) => this.changeOrderClassDesc("teremszam", e)}>Osztályterem</button>

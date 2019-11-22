@@ -15,11 +15,13 @@ export default class LoginComponent extends Component {
 
     enterUsername(event) {
         event.preventDefault();
+        document.getElementById("username").classList.remove("badinput");
         this.setState({ username: event.target.value });
     }
 
     enterPassword(event) {
         event.preventDefault();
+        document.getElementById("password").classList.remove("badinput");
         this.setState({ password: event.target.value });
     }
 
@@ -35,7 +37,9 @@ export default class LoginComponent extends Component {
             })
             .catch(error => {
                 console.log("Login failed");
-                alert("Sikertelen bejelentkezés\nHibás felhasználónév vagy jelszó");
+                document.getElementById("username").classList.add("badinput");
+                document.getElementById("password").classList.add("badinput");
+                document.getElementById("loginfailmsg").classList.remove("badinputdisplay");
             });
     }
 
@@ -50,11 +54,12 @@ export default class LoginComponent extends Component {
                     <div id="loginform">
                         <form onSubmit={this.handleSubmit.bind(this)}>
                             Felhasználónév<br />
-                            <input type="text" placeholder="Felhasználónév" onChange={this.enterUsername.bind(this)} />
+                            <input id="username" type="text" placeholder="Felhasználónév" onChange={this.enterUsername.bind(this)} />
                             Jelszó<br />
-                            <input type="password" placeholder="Jelszó" onChange={this.enterPassword.bind(this)} />
+                            <input id="password" type="password" placeholder="Jelszó" onChange={this.enterPassword.bind(this)} />
                             <input type="submit" value="Belépés" />
                         </form>
+                        <div id="loginfailmsg" className="badinputdisplay">Hibás felhasználónév vagy jelszó!</div>
                     </div>
                 </div>
                 {this.state.redirect}

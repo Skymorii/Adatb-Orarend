@@ -57,11 +57,10 @@ export default class ModifyClassrooms extends Component {
 
     async add_classroom(event) {
         event.preventDefault();
-        let classroomNameRegex = /^[a-záéúőóüöíA-ZÁÉÚŐÓÜÖÍ0-9]*$/;
-        let classroomCapacityRegex = /^[0-9]*$/;
+        let classroomRegex = /^[a-záéúőóüöíA-ZÁÉÚŐÓÜÖÍ0-9]{1,4}$/;
 
-        if (this.state.add_teremszam.length > 4 || this.state.add_teremszam.length <= 0 || !classroomNameRegex.test(this.state.add_teremszam)
-            || this.state.add_kapacitas > 999 || this.state.add_kapacitas <= 0 || !classroomCapacityRegex.test(this.state.add_kapacitas)
+        if (!classroomRegex.test(this.state.add_teremszam)
+            || this.state.add_kapacitas > 999 || this.state.add_kapacitas <= 0
             || this.state.add_gepterem_e > 1 || this.state.add_gepterem_e < 0) {
             alert("Nem megfelelő adatok!");
         } else {
@@ -110,11 +109,10 @@ export default class ModifyClassrooms extends Component {
 
     async modify_classroom(event) {
         event.preventDefault();
-        let classroomNameRegex = /^[a-záéúőóüöíA-ZÁÉÚŐÓÜÖÍ0-9]*$/;
-        let classroomCapacityRegex = /^[0-9]*$/;
+        let classroomRegex = /^[a-záéúőóüöíA-ZÁÉÚŐÓÜÖÍ0-9]{1,4}$/;
 
-        if (this.state.modify_teremszam_new.length > 4 || this.state.modify_teremszam_new.length <= 0 || !classroomNameRegex.test(this.state.modify_teremszam_new)
-            || this.state.modify_kapacitas_new > 999 || this.state.modify_kapacitas_new <= 0 || !classroomCapacityRegex.test(this.state.modify_kapacitas_new)
+        if (!classroomRegex.test(this.state.modify_teremszam_new)
+            || this.state.modify_kapacitas_new > 999 || this.state.modify_kapacitas_new <= 0
             || this.state.modify_gepterem_e_new > 1 || this.state.modify_gepterem_e_new < 0) {
             alert("Nem megfelelő adatok!");
         } else {

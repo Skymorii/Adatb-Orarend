@@ -41,9 +41,9 @@ export default class ModifySubjects extends Component {
 
     async add_subject(event) {
         event.preventDefault();
-        let subjectRegex = /^[a-záéúőóüöíA-ZÁÉÚŐÓÜÖÍ]*$/;
+        let subjectRegex = /^[a-záéúőóüöíA-ZÁÉÚŐÓÜÖÍ]{1,255}$/;
 
-        if (this.state.add_nev.length > 255 || this.state.add_nev.length <= 0 || !subjectRegex.test(this.state.add_nev)) {
+        if (!subjectRegex.test(this.state.add_nev)) {
             alert("Nem megfelelő a tantárgy neve!");
         } else {
             Axios.post("http://localhost:4000/add/subject", {
@@ -75,9 +75,9 @@ export default class ModifySubjects extends Component {
 
     async modify_subject(event) {
         event.preventDefault();
-        let subjectRegex = /^[a-záéúőóüöíA-ZÁÉÚŐÓÜÖÍ]*$/;
+        let subjectRegex = /^[a-záéúőóüöíA-ZÁÉÚŐÓÜÖÍ]{1,255}$/;
 
-        if (this.state.modify_nev_new.length > 255 || this.state.modify_nev_new.length <= 0 || !subjectRegex.test(this.state.modify_nev_new)) {
+        if (!subjectRegex.test(this.state.modify_nev_new)) {
             alert("Nem megfelelő a tantárgy neve!");
         } else {
             Axios.post("http://localhost:4000/modify/subject", {

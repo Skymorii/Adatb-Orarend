@@ -133,51 +133,6 @@ export default class ModifyLessons extends Component {
                     </form>
                 </div>
 
-
-                <button className="accordion" id="modifylesson" onClick={(e) => accordion(e.target.id)}>Óra módosítása</button>
-                <div className="panel">
-                    <form name="modifylesson">
-                        Módosítandó tantárgy kiválasztása:
-                        <select name="tanora_tomodify">
-                            <option selected disabled></option>
-                            {this.state.lessons}
-                        </select>
-                        Terem:
-                        <select name="teremszam">
-                            <option selected disabled></option>
-                            {this.state.classrooms}
-                        </select>
-                        Nap:
-                        <select name="nap">
-                            <option selected disabled></option>
-                            <option value="Hétfő">Hétfő</option>
-                            <option value="Kedd">Kedd</option>
-                            <option value="Szerda">Szerda</option>
-                            <option value="Csütörtök">Csütörtök</option>
-                            <option value="Péntek">Péntek</option>
-                        </select>
-                        Óra:
-                        <input type="number" name="ora" placeholder="Óra" min="0" max="8" required /> <br />
-                        Osztály:
-                        <select name="osztaly_id">
-                            <option selected disabled></option>
-                            {this.state.classes}
-                        </select>
-                        Tanár:
-                        <select name="pedagogus_id">
-                            <option selected disabled></option>
-                            {this.state.teachers}
-                        </select>
-                        Tantárgy:
-                        <select name="nev">
-                            <option selected disabled></option>
-                            {this.state.subjects}
-                        </select>
-                        <input type="submit" value="Módosítás" />
-                    </form>
-                </div>
-
-
                 <button className="accordion" id="deletelesson" onClick={(e) => accordion(e.target.id)}>Óra törlése</button>
                 <div className="panel">
                     <form name="deletelesson">
