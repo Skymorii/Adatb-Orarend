@@ -39,6 +39,10 @@ body {
     width: 1vw;
 }
 
+.vdivider {
+    height: 5vh;
+}
+
 /* Navigaton */
 li a {
     text-decoration: none;

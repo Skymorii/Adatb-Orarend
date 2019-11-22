@@ -17,7 +17,7 @@
     background-color: #4f3e6b; 
 }
 
-.admin .panel {
+.admin .panel, #mainadmin .panel {
     margin-bottom: 3vh;
     padding: 5vh 4vw;
     overflow: hidden;
@@ -64,11 +64,6 @@
     background-color: #922525 !important;
 }
 
-.admin hr {
-    margin-top: 5vh;
-    margin-bottom: 5vh;
-}
-
 .admin .toadmin {
     margin-top: 3vh;
     padding: 2vh;
@@ -108,4 +103,12 @@
 #mainadmin .tile img {
     height: 10vh;
     margin-right: 2vw;
+}
+
+#mainadmin .panel h4 {
+    margin-bottom: 1vh !important;
+}
+
+#mainadmin .panel p {
+    margin: 0 !important;
 }
