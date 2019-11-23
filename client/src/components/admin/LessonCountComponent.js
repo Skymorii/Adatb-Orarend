@@ -5,7 +5,7 @@ export default class LessonCountComponent extends Component {
         super(props);
         this.state = {
             teacher: this.props.lessonCount.nev,
-            lessons: this.props.lessonCount.hany_orat,
+            lessons: this.props.lessonCount.hany_orat
         }
     }
 

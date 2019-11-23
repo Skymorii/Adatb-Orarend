@@ -90,23 +90,41 @@ export default class AdminComponent extends Component {
             <main className="admin" id="mainadmin">
                 <h1>Admin felület</h1>
 
-                <button className="accordion" id="data" onClick={(e) => accordion(e.target.id)}>Adatok</button>
+                <button className="accordion" id="data" onClick={(e) => accordion(e.target.id)}>Statisztikák</button>
                 <div className="panel">
-                        <h4>Tanított tárgyak</h4>
-                        <p>Minimum: {this.state.avgSubjects[0].min}</p>
-                        <p>Maximum: {this.state.avgSubjects[0].max}</p>
-                        <p>Átlag: {this.state.avgSubjects[0].atlag}</p>
+                    <h4>Tanított tárgyak</h4>
+                    <p>Minimum: {this.state.avgSubjects[0].min}</p>
+                    <p>Maximum: {this.state.avgSubjects[0].max}</p>
+                    <p>Átlag: {this.state.avgSubjects[0].atlag}</p>
 
-                        <h4>Tartott órák</h4>
-                        <p>Minimum: {this.state.avgLessons[0].min}</p>
-                        <p>Maximum: {this.state.avgLessons[0].max}</p>
-                        <p>Átlag: {this.state.avgLessons[0].atlag}</p>
+                    <h4>Tartott órák</h4>
+                    <p>Minimum: {this.state.avgLessons[0].min}</p>
+                    <p>Maximum: {this.state.avgLessons[0].max}</p>
+                    <p>Átlag: {this.state.avgLessons[0].atlag}</p>
 
-                        <h4>Legtöbbet tartott órák</h4>
-                        {this.state.topSubjects}
+                    <h4>Legtöbbet tartott órák</h4>
+                    {this.state.topSubjects}
 
-                        <h4>Óraszámok</h4>
-                        {this.state.lessonCount}
+                    <h4>Óraszámok</h4>
+                    {this.state.lessonCount}
+                </div>
+
+                <button className="accordion" id="help" onClick={(e) => accordion(e.target.id)}>Útmutató</button>
+                <div className="panel">
+                    <h4>Adatok törlésére vonatkozó megszorítások</h4>
+                    <ul>
+                        <li>Azokat a pedagógusokat, akik osztályfőnökök vagy órát tartanak nem lehet törölni</li>
+                        <li>Azokat a tantermeket, melyek egy osztályhoz tartoznak vagy tartozik hozzá tanóra nem lehet törölni</li>
+                        <li>Tanított tantárgyakat nem lehet törölni</li>
+                    </ul>
+
+                    <div className="vdivider"></div>
+
+                    <h4>Adatok módosítására vonatkozó megszorítások</h4>
+                    <ul>
+                        <li>Az adatok módosítása nagyrészt engedélyezett az adatbázisban, viszont a módosítások befolyásolhatják a többi adatot is</li>
+                        <li>A tanórák módosítása az adatok jellegére vonatkozó tekinttel nem engedélyezett</li>
+                    </ul>
                 </div>
 
                 <div className="vdivider"></div>

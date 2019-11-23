@@ -10,7 +10,7 @@ const db = sql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'schedule',
+    database: 'orarend',
     multipleStatements: true
 });
 

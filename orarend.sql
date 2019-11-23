@@ -28,8 +28,8 @@ CREATE TABLE `osztaly` (
     `letszam` int(2) NOT NULL,
     `pedagogus_id` varchar(8) NOT NULL,
     `teremszam` varchar(4) NOT NULL,
-    FOREIGN KEY (`pedagogus_id`) REFERENCES `tanar` (`pedagogus_id`) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (`teremszam`) REFERENCES `terem` (`teremszam`) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (`pedagogus_id`) REFERENCES `tanar` (`pedagogus_id`) ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (`teremszam`) REFERENCES `terem` (`teremszam`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
 CREATE TABLE `ora` (
@@ -41,9 +41,9 @@ CREATE TABLE `ora` (
     `nev` varchar(255) NOT NULL,
     PRIMARY KEY (`teremszam`, `nap`, `ora`),
     FOREIGN KEY (`teremszam`) REFERENCES `terem` (`teremszam`),
-    FOREIGN KEY (`osztaly_id`) REFERENCES `osztaly` (`osztaly_id`) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (`pedagogus_id`) REFERENCES `tanar` (`pedagogus_id`) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (`nev`) REFERENCES `tantargy` (`nev`) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (`osztaly_id`) REFERENCES `osztaly` (`osztaly_id`) ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (`pedagogus_id`) REFERENCES `tanar` (`pedagogus_id`) ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (`nev`) REFERENCES `tantargy` (`nev`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `terem` (`teremszam`, `kapacitas`, `gepterem_e`) VALUES
@@ -210,4 +210,3 @@ INSERT INTO `ora` (`teremszam`, `nap`, `ora`, `osztaly_id`, `pedagogus_id`, `nev
 ('Ktt', 'Csütörtök', 7, '11a', '8YC7MCB3', 'Testnevelés'),
 ('Ktt', 'Péntek', 3, '11a', '8YC7MCB3', 'Testnevelés'),
 ('Rtt', 'Kedd', 1, '11a', 'V7RHW6UP', 'Rajz');
-

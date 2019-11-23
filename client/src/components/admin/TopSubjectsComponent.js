@@ -5,7 +5,7 @@ export default class TopSubjectsComponent extends Component {
         super(props);
         this.state = {
             subject: this.props.topSubject.nev,
-            teachers: this.props.topSubject.tanarok,
+            teachers: this.props.topSubject.tanarok
         }
     }
 
