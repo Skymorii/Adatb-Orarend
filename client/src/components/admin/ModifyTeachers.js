@@ -16,13 +16,12 @@ export default class ModifyTeachers extends Component {
             add_tantargy1: "",
             add_tantargy2: "",
 
-            modify_pedagogus_id: "",
-            modify_targynev1: "",
-            modify_targynev2: "",
-            modify_pedagogus_id_new: "",
+            modify_pedagogus_id_name: "",
             modify_nev_new: "",
-            modify_tantargy1_new: "",
-            modify_tantargy2_new: "",
+            modify_pedagogus_id_addsub: "",
+            modify_targynev: "",
+            modify_pedagogus_id_deletesub: "",
+            modify_targynev_delete: "",
 
             delete_teacher: ""
         }
@@ -111,14 +110,19 @@ export default class ModifyTeachers extends Component {
     }
 
     // Post modify
-    modify_chosenTeacher(event) {
+    modify_chosenTeacher_name(event) {
         event.preventDefault();
-        this.setState({ modify_pedagogus_id: event.target.value });
+        this.setState({ modify_pedagogus_id_name: event.target.value });
     }
 
-    modify_enterTeacherId(event) {
+    modify_chosenTeacher_addsub(event) {
         event.preventDefault();
-        this.setState({ modify_pedagogus_id_new: event.target.value });
+        this.setState({ modify_pedagogus_id_addsub: event.target.value });
+    }
+
+    modify_chosenTeacher_deletesub(event) {
+        event.preventDefault();
+        this.setState({ modify_pedagogus_id_deletesub: event.target.value });
     }
 
     modify_enterTeacherName(event) {
@@ -126,47 +130,85 @@ export default class ModifyTeachers extends Component {
         this.setState({ modify_nev_new: event.target.value });
     }
 
-    modify_enterTeacherSubject1(event) {
+    modify_enterTeacherSubject(event) {
         event.preventDefault();
-        this.setState({ modify_tantargy1_new: event.target.value });
+        this.setState({ modify_targynev: event.target.value });
     }
 
-    modify_enterTeacherSubject2(event) {
+    modify_enterTeacherSubjectDelete(event) {
         event.preventDefault();
-        this.setState({ modify_tantargy2_new: event.target.value });
+        this.setState({ modify_targynev_delete: event.target.value });
     }
 
-    async modify_teacher(event) {
+    async modify_teacher_name(event) {
         event.preventDefault();
-        let teacherIDRegex = /^[A-Z0-9]{8}$/;
         let teacherNameRegex = /^[a-záéúőóüöíA-ZÁÉÚŐÓÜÖÍ ]{1,255}$/;
 
-        if (!teacherIDRegex.test(this.state.modify_pedagogus_id_new) || !teacherNameRegex.test(this.state.modify_nev_new)) {
+        if (!teacherNameRegex.test(this.state.modify_nev_new)) {
             alert("Nem megfelelő adatok!");
         } else {
             Axios.post("http://localhost:4000/modify/teacher", {
-                old_pedagogus_id: this.state.modify_pedagogus_id,
-                new_pedagogus_id: this.state.modify_pedagogus_id_new,
+                old_pedagogus_id: this.state.modify_pedagogus_id_name,
                 new_nev: this.state.modify_nev_new,
-                new_tantargy1: this.state.modify_tantargy1_new,
-                new_tantargy2: this.state.modify_tantargy2_new
             })
                 .then(async resp => {
                     console.log("Teacher modified successfully");
                     alert("Tanár módosítása sikeres!");
                     this.setState({
-                        modify_pedagogus_id: "",
-                        modify_pedagogus_id_new: "",
-                        modify_tantargy1_new: "",
-                        modify_tantargy2_new: "",
+                        modify_pedagogus_id_name: "",
+                        modify_nev_new: ""
                     });
                     await this.fetchDataTeachers();
                 })
                 .catch(err => {
-                    console.log("Error in ModifyTeachers modify_teacher");
+                    console.log("Error in ModifyTeachers modify_teacher_name");
                     alert("Hiba történt");
                 });
         }
+    }
+
+    async modify_teacher_addsubject(event) {
+        event.preventDefault();
+
+        Axios.post("http://localhost:4000/modify/teacheraddsubject", {
+            new_subject: this.state.modify_targynev,
+            pedagogus_id: this.state.modify_pedagogus_id_addsub,
+        })
+            .then(async resp => {
+                console.log("Teacher modified successfully");
+                alert("Tanár módosítása sikeres!");
+                this.setState({
+                    modify_pedagogus_id_addsub: "",
+                    modify_targynev: "",
+                });
+                await this.fetchDataTeachers();
+            })
+            .catch(err => {
+                console.log("Error in ModifyTeachers modify_teacher_addsubject");
+                alert("Hiba történt");
+            });
+    }
+
+    async modify_teacher_deltesubject(event) {
+        event.preventDefault();
+
+        Axios.post("http://localhost:4000/modify/teacherdeletesubject", {
+            pedagogus_id: this.state.modify_pedagogus_id_deletesub,
+            subject: this.state.modify_targynev_delete
+        })
+            .then(async resp => {
+                console.log("Teacher modified successfully");
+                alert("Tanár módosítása sikeres!");
+                this.setState({
+                    modify_pedagogus_id_deletesub: "",
+                    modify_targynev_delete: ""
+                });
+                await this.fetchDataTeachers();
+            })
+            .catch(err => {
+                console.log("Error in ModifyTeachers modify_teacher_deltesubject");
+                alert("Hiba történt");
+            });
     }
 
     // Post delete
@@ -221,26 +263,54 @@ export default class ModifyTeachers extends Component {
 
                 <button className="accordion" id="modifyteacher" onClick={(e) => accordion(e.target.id)}>Tanár módosítása</button>
                 <div className="panel">
-                    <form onSubmit={this.modify_teacher.bind(this)}>
+                    <form onSubmit={this.modify_teacher_name.bind(this)}>
                         Módosítandó tanár kiválasztása:
-                        <select value={this.state.modify_pedagogus_id} onChange={this.modify_chosenTeacher.bind(this)}>
+                        <select value={this.state.modify_pedagogus_id_name} onChange={this.modify_chosenTeacher_name.bind(this)}>
                             <option value="" selected disabled></option>
                             {this.state.teachers}
                         </select>
-                        Pedagógus ID:<br />
-                        <input type="text" value={this.state.modify_pedagogus_id_new} onChange={this.modify_enterTeacherId.bind(this)} placeholder="Pedagógus ID" maxLength="8" required /> <br />
                         Teljes név:<br />
                         <input type="text" value={this.state.modify_nev_new} onChange={this.modify_enterTeacherName.bind(this)} placeholder="Teljes név" min="1" max="255" required /> <br />
-                        Tanított tárgyak:<br />
-                        <select value={this.state.modify_tantargy1_new} onChange={this.modify_enterTeacherSubject1.bind(this)}>
-                            <option value="" selected disabled></option>
-                            {this.state.subjects}
-                        </select>
-                        <select value={this.state.modify_tantargy2_new} onChange={this.modify_enterTeacherSubject2.bind(this)}>
-                            <option value="" selected disabled></option>
-                            {this.state.subjects}
-                        </select>
+
                         <input type="submit" value="Módosítás" />
+                    </form>
+
+                    <div class="vdivider"></div>
+
+                    <form onSubmit={this.modify_teacher_addsubject.bind(this)}>
+                        Tantárgy hozzáadása<br />
+
+                        Módosítandó tanár kiválasztása:
+                        <select value={this.state.modify_pedagogus_id_addsub} onChange={this.modify_chosenTeacher_addsub.bind(this)}>
+                            <option value="" selected disabled></option>
+                            {this.state.teachers}
+                        </select>
+
+                        <select value={this.state.modify_targynev} onChange={this.modify_enterTeacherSubject.bind(this)}>
+                            <option value="" selected disabled></option>
+                            {this.state.subjects}
+                        </select>
+
+                        <input type="submit" value="Hozzáadás" />
+                    </form>
+
+                    <div class="vdivider"></div>
+
+                    <form onSubmit={this.modify_teacher_deltesubject.bind(this)}>
+                        Tantárgy törlése<br />
+
+                        Módosítandó tanár kiválasztása:
+                        <select value={this.state.modify_pedagogus_id_deletesub} onChange={this.modify_chosenTeacher_deletesub.bind(this)}>
+                            <option value="" selected disabled></option>
+                            {this.state.teachers}
+                        </select>
+
+                        <select value={this.state.modify_targynev_delete} onChange={this.modify_enterTeacherSubjectDelete.bind(this)}>
+                            <option value="" selected disabled></option>
+                            {this.state.subjects}
+                        </select>
+
+                        <input type="submit" value="Törlés" className="deletebtn" />
                     </form>
                 </div>
 

@@ -412,18 +412,8 @@ server.post("/add/teacher", jsonParser, (req, res) => {
 
 server.post("/modify/teacher", jsonParser, (req, res) => {
     let q = `UPDATE tanar
-            SET pedagogus_id = '${req.body.new_pedagogus_id}', nev = '${req.body.new_targynev}' 
-            WHERE pedagogus_id = '${req.body.old_pedagogus_id}';
-            
-            UPDATE tanitott_targyak
-            SET pedagogus_id = '${req.body.new_pedagogus_id}', targynev = '${req.body.new_targynev1}' 
-            WHERE pedagogus_id = '${req.body.old_pedagogus_id}'
-            AND targynenev = '${req.body.old_targynev1}';
-            
-            UPDATE tanitott_targyak
-            SET pedagogus_id = '${req.body.new_pedagogus_id}', 'targynev = ${req.body.new_targynev2}' 
-            WHERE pedagogus_id = '${req.body.old_pedagogus_id}'
-            AND targynenev = '${req.body.old_targynev2}';`;
+            SET nev = '${req.body.new_nev}' 
+            WHERE pedagogus_id = '${req.body.old_pedagogus_id}';`;
 
     db.query(q, (err, result) => {
         if (err) {
@@ -431,6 +421,35 @@ server.post("/modify/teacher", jsonParser, (req, res) => {
         } else {
             res.status(200).send();
             console.log(`POST /modify/teacher at ` + new Date().toLocaleString());
+        }
+    });
+});
+
+server.post("/modify/teacheraddsubject", jsonParser, (req, res) => {
+    let q = `INSERT INTO tanitott_targyak VALUES
+            ('${req.body.pedagogus_id}', '${req.body.new_subject}');`;
+
+    db.query(q, (err, result) => {
+        if (err) {
+            res.status(418).send();
+        } else {
+            res.status(200).send();
+            console.log(`POST /modify/teacheraddsubject at ` + new Date().toLocaleString());
+        }
+    });
+});
+
+server.post("/modify/teacherdeletesubject", jsonParser, (req, res) => {
+    let q = `DELETE FROM tanitott_targyak
+            WHERE pedagogus_id = '${req.body.pedagogus_id}'
+            AND targynev = '${req.body.subject}';`;
+
+    db.query(q, (err, result) => {
+        if (err) {
+            res.status(418).send();
+        } else {
+            res.status(200).send();
+            console.log(`POST /modify/teacherdeletesubject at ` + new Date().toLocaleString());
         }
     });
 });
